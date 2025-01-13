@@ -38,22 +38,22 @@ class Auth
       return false;
     }
 
-    $passwordhash = password_hash($password, PASSWORD_DEFAULT);
+    // $passwordhash = password_hash($password, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
-    $stmt = $this->conn->Connection()->prepare($query);
+    // $query = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
+    // $stmt = $this->conn->Connection()->prepare($query);
 
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $passwordhash);
+    // $stmt->bindParam(':username', $username);
+    // $stmt->bindParam(':email', $email);
+    // $stmt->bindParam(':password', $passwordhash);
 
 
-    if ($stmt->execute()) {
-      return true;
+    // if ($stmt->execute()) {
+    //   return true;
     
-    } else {
-      return false;
-    }
+    // } else {
+    //   return false;
+    // }
   }
 
 
