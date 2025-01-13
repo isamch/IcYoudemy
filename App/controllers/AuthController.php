@@ -13,6 +13,7 @@ class AuthController
   {
 
     SessionController::checksesession('user', 'home');
+
     $title = 'Login | page';
     include __DIR__ . '../../view/login.php';
 
@@ -22,6 +23,7 @@ class AuthController
   {
 
     SessionController::checksesession('user', 'home');
+  
     $title = 'Register | page';
     include __DIR__ . '../../view/register.php';
 
@@ -36,25 +38,39 @@ class AuthController
     $username = $_POST['full-name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $role = $_POST['role'];
+ 
 
-    if (empty($username) || empty($email) || empty($password)) {
-      header('Location: /brief10/public/index.php/register');
+    if (empty($username) || empty($email) || empty($password) || empty($role)) {
+      $_SESSION['error'] = 'inputs vide!';
+      header('Location: /Youdemy/public/index.php/register?empth=0');
+      exit;
+    }
+
+    // dump($role);
+
+    if ($role != "student" && $role != "teacher") {
+      $_SESSION['error'] = 'select role!';
+      header('Location: /Youdemy/public/index.php/register?select=0');
       exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      header('Location: /brief10/public/index.php/register');
+      $_SESSION['error'] = 'email invalide!';
+      header('Location: /Youdemy/public/index.php/register?email=err');
       exit;
     }
 
 
     if (strlen($password) < 8) {
-      header('Location: /brief10/public/index.php/register');
+      header('Location: /Youdemy/public/index.php/register?pass=err');
       exit;
     }
 
-    if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
-      header('Location: /brief10/public/index.php/register');
+
+    if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)/', $password)) {
+      $_SESSION['error'] = 'password invalide!';
+      header('Location: /Youdemy/public/index.php/register?pass=err');
       exit;
     }
 
@@ -62,14 +78,14 @@ class AuthController
     // after validation ;
     $authregister = new Auth();
 
-    if ($authregister->registermodel($username, $email, $password)) {
+    if ($authregister->registermodel($username, $email, $password, $role)) {
       
-      header('Location: /brief10/public/index.php/login');
+      header('Location: /Youdemy/public/index.php/login');
       exit;
     } else {
 
 
-      $_SESSION['error'] = 'email exist';
+      $_SESSION['error'] = 'email exist!!';
       header('Location: ' . $_SERVER['HTTP_REFERER']);
       exit;
     }
@@ -87,23 +103,27 @@ class AuthController
     $password = $_POST['password'];
 
     if (empty($email) || empty($password)) {
-      header('Location: /brief10/public/index.php/login');
+      $_SESSION['error'] = 'inputs vide!';
+      header('Location: /Youdemy/public/index.php/login?empty=login');
       exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      header('Location: /brief10/public/index.php/login');
+      $_SESSION['error'] = 'email invalide!';
+      header('Location: /Youdemy/public/index.php/login?email=err');
       exit;
     }
 
 
     if (strlen($password) < 8) {
-      header('Location: /brief10/public/index.php/login');
+      $_SESSION['error'] = 'password length!';
+      header('Location: /Youdemy/public/index.php/login?pass=err8');
       exit;
     }
 
-    if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
-      header('Location: /brief10/public/index.php/login');
+    if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)/', $password)) {
+      $_SESSION['error'] = 'password invalide!';
+      header('Location: /Youdemy/public/index.php/login?pass=err');
       exit;
     }
 
@@ -115,28 +135,29 @@ class AuthController
 
     $result = $authloging->loginmodel($email, $password);
 
+
     if ($result) {
       
-      // dump($result);
 
-      if(password_verify($password, $result['password']) || $password == $result['password']){
+      if(password_verify($password, $result['Password']) || $password == $result['Password']){
+
         $_SESSION['user'] = $result;
-        header('Location: /brief10/public/index.php/home');
+
+        header('Location: /Youdemy/public/index.php/home');
         exit;
 
       }else{
         $_SESSION['error'] = 'password incorecct';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-        // header('Location: /brief10/public/index.php/login');
+        // header('Location: /Youdemy/public/index.php/login');
         exit;
       }
 
 
     }else{
-      $_SESSION['error'] = 'email not incorecct';
-
+      $_SESSION['error'] = 'email not found';
       header('Location: ' . $_SERVER['HTTP_REFERER']);
-      // header('Location: /brief10/public/index.php/login');
+      // header('Location: /Youdemy/public/index.php/login');
       exit;
     }
 
@@ -144,17 +165,20 @@ class AuthController
   }
 
 
+
   public function logout()
   {
     session_start();
 
     // session_unset();
+    $authloging = new Auth();
+    $authloging->updateConnStatusToOffline($_SESSION['user']['Email']);
 
     unset($_SESSION['user']);
 
     session_destroy();
 
-    header("Location: /brief10/public/index.php/login");
+    header("Location: /Youdemy/public/index.php/login");
     exit();
 
   }

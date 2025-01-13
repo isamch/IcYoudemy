@@ -9,7 +9,7 @@ class HomeController
   
   public function home() {
 
-    // SessionController::checksesession('user', 'login' , false);
+    SessionController::checksesession('user', 'login' , false);
 
 
     $title = 'Youdemy | Home';

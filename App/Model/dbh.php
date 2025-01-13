@@ -10,8 +10,8 @@ class dbh
 {
 
   private $host = 'localhost';
-  private $db_name = 'testauth';
-  private $username = 'youdemy';
+  private $db_name = 'youdemy';
+  private $username = 'root';
   private $password = '';
   // private $conn;
 

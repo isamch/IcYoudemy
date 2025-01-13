@@ -35,14 +35,18 @@ class Router
 
     if (isset($this->routes[$route])) {
       
-      $newregister = new AuthController;
+      $authobject = new AuthController;
 
       // check for post method :
       if ( isset($_POST['register']) ) {
         echo 'post register method';
-        // $newregister->register();
+        $authobject->register();
       }
-
+      
+      if ( isset($_POST['login']) ) {
+        echo 'post Login method';
+        $authobject->login();
+      }
 
 
       call_user_func($this->routes[$route]);

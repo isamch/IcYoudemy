@@ -9,10 +9,10 @@ class SessionController
   {
 
     if ($checkstatus && isset($_SESSION[$sesname])) {
-      header("Location: /brief10/public/index.php/$redirectpage");
+      header("Location: /Youdemy/public/index.php/$redirectpage");
       exit;
     } elseif (!$checkstatus && !isset($_SESSION[$sesname])) {
-      header("Location: /brief10/public/index.php/$redirectpage");
+      header("Location: /Youdemy/public/index.php/$redirectpage");
       exit;
     }
   }
@@ -22,7 +22,7 @@ class SessionController
   {
 
     if (isset($_SESSION[$sesname]) && $_SESSION[$sesname]['roles'] == $role) {
-      header("Location: /brief10/public/index.php/$redirectpage");
+      header("Location: /Youdemy/public/index.php/$redirectpage");
       exit;
     }
   }

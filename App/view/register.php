@@ -1,16 +1,11 @@
 <?php include_once __DIR__ . '/includes/header.php' ?>
 
-<?php 
 
-dump($_POST['full-name']);
-dump($_POST['email']);
-dump($_POST['password']);
-dump($_POST['role']);
-
-?>
 
 <div class="font-[sans-serif] bg-white max-w-4xl flex items-center mx-auto md:h-screen p-4">
   <div class="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
+
+
     <div class="max-md:order-1 flex flex-col justify-center md:space-y-16 space-y-8 max-md:mt-16 min-h-full bg-gradient-to-r from-gray-900 to-gray-700 lg:px-8 px-4 py-4">
       <div>
         <h4 class="text-white text-lg">Create Your Account</h4>
@@ -61,7 +56,7 @@ dump($_POST['role']);
         <div>
           <label class="text-gray-600 text-sm mb-2 block">Password</label>
           <div class="relative flex items-center">
-          <input name="password" type="password" required class="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500" placeholder="Enter password" title="Password must be at least 8 characters long" pattern=".{8,}" required/>
+            <input name="password" type="password" required class="text-gray-800 bg-white border border-gray-300 w-full text-sm pl-4 pr-8 py-2.5 rounded-md outline-blue-500" placeholder="Enter password" title="Password must be at least 8 characters long" pattern=".{8,}" required />
             <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb" class="w-4 h-4 absolute right-4 cursor-pointer" viewBox="0 0 128 128">
               <path d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z" data-original="#000000"></path>
             </svg>
@@ -76,12 +71,6 @@ dump($_POST['role']);
             <option value="teacher">teacher</option>
           </select>
         </div>
-<!-- 
-        <div class="flex items-center justify-center">
-          <span class="font-bold text-red-700 uppercase">
-            error message!!
-          </span>
-        </div> -->
 
       </div>
 
@@ -95,6 +84,60 @@ dump($_POST['role']);
   </div>
 </div>
 
+
+<?php if (isset($_SESSION['error'])): ?>
+
+
+
+  <!-- errors -->
+  <div id="overlay" class="fixed inset-0 bg-black opacity-10 z-40"></div>
+
+  <div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-full h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+
+      <!-- danger message -->
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline"><?php echo $_SESSION['error'] ?></span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+          <svg id="Close-modal" class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <title>Close</title>
+            <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+          </svg>
+        </span>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <script>
+    const modal = document.querySelector('#popup-modal');
+    const overlay = document.querySelector('#overlay');
+
+    console.log(overlay);
+    setTimeout(function() {
+      modal.classList.add('hidden');
+      overlay.classList.add('hidden');
+
+    }, 3000);
+
+    const closeButtons = document.querySelectorAll('#Close-modal');
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        modal.classList.add('hidden');
+        overlay.classList.add('hidden');
+      });
+    });
+  </script>
+
+
+
+  <?php unset($_SESSION['error']); ?>
+
+<?php endif ?>
 
 
 

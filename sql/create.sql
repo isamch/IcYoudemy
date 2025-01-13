@@ -49,3 +49,11 @@ CREATE TABLE CourseTags (
 
 
 
+
+-- update :
+ALTER TABLE Users
+ADD COLUMN accStatus ENUM('active', 'not active', 'suspend') NOT NULL DEFAULT 'not active';
+
+
+ALTER TABLE Users
+ADD COLUMN connectStatus ENUM('online', 'offline') NOT NULL DEFAULT 'offline';
