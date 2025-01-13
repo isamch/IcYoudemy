@@ -1,0 +1,13 @@
+{
+    "name": "youcode/ic-udemy",
+    "require": {
+        "symfony/var-dumper": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "MyApp\\": "App/",
+            "Router\\": "router/",
+            "Pub\\": "public/"
+        }
+    }
+}
