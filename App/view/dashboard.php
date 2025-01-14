@@ -32,13 +32,13 @@
       <div class="container-fluid">
         <ul class="navbar-nav mx-auto d-none d-lg-flex">
           <li class="nav-item me-4">
-            <a class="nav-link" href="/brief10/public/index.php/home">Home</a>
+            <a class="nav-link" href="/Youdemy/public/index.php/home">Home</a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link active" href="/brief10/public/index.php/dashboard">Dashboard</a>
+            <a class="nav-link active" href="/Youdemy/public/index.php/dashboard">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/brief10/public/index.php/profile">Profile</a>
+            <a class="nav-link" href="/Youdemy/public/index.php/profile">Profile</a>
           </li>
       </div>
     </div>
@@ -50,24 +50,24 @@
   <div class="l-navbar" id="nav-bar">
     <nav class="nav">
       <div>
-        <a href="/brief10/public/index.php/home" class="nav_logo">
+        <a href="/Youdemy/public/index.php/home" class="nav_logo">
           <i class='bx bx-layer nav_logo-icon'></i>
           <span class="nav_logo-name">Home</span>
         </a>
         <div class="nav_list">
-          <a href="/brief10/public/index.php/dashboard?section=postedashboard" class="nav_link active">
-            <i class='bx bx-file nav_logo-icon'></i>
-            <span class="nav_name">Postes</span>
+          <a href="/Youdemy/public/index.php/dashboard?section=coursesdashboard" class="nav_link <?php echo (isset($_GET['section']) && $_GET['section'] == 'coursesdashboard' || !isset($_GET['section'])) ? ' active' : ''; ?>">
+            <i class="fa-solid fa-book"></i>
+            <span class="nav_name">Courses</span>
           </a>
 
-          <?php if ($_SESSION['user']['roles'] == 'admin'): ?>
+          <?php if ($_SESSION['user']['Role'] == 'admin'): ?>
 
-            <a href="/brief10/public/index.php/dashboard?section=categorydashboard" class="nav_link">
+            <a href="/Youdemy/public/index.php/dashboard?section=categorydashboard" class="nav_link <?php echo (isset($_GET['section']) && $_GET['section'] == 'categorydashboard') ? ' active' : ''; ?>">
               <i class='bx bx-category nav_logo-icon'></i>
               <span class="nav_name">Category</span>
             </a>
 
-            <a href="/brief10/public/index.php/dashboard?section=userdashboard" class="nav_link">
+            <a href="/Youdemy/public/index.php/dashboard?section=userdashboard" class="nav_link <?php echo (isset($_GET['section']) && $_GET['section'] == 'userdashboard') ? ' active' : ''; ?>">
               <i class='bx bx-user nav_logo-icon'></i>
               <span class="nav_name">Users</span>
             </a>
@@ -82,8 +82,19 @@
   </div>
   <!--Container Main start-->
   <div class="height-100 bg-light">
-    main here!
-    
+
+    <?php 
+      if (isset($_GET['section'])) {
+        $getpath = $_GET['section'];
+        include_once "includes/$getpath.php";
+      } else {
+        include_once "includes/coursesdashboard.php";
+      }
+    ?>
+
+
+
+
   </div>
   <!--Container Main end-->
 

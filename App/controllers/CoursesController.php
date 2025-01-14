@@ -13,7 +13,7 @@ class coursesController
   {
 
     // SessionController::checksesession('user', 'login' , false);
-
+    
     $title = 'Youdemy | Courses';
     include __DIR__ . '../../view/courses.php';
   }
@@ -21,7 +21,7 @@ class coursesController
 
 
   // display function as pagination:
-  public function displayCourses($page, $row_per_page)
+  public function displayCourses($page, $row_per_page, $pageinclude)
   {
 
     $startindx = ($page - 1) * $row_per_page;
@@ -34,8 +34,11 @@ class coursesController
     
     $totalPages = ceil($totalCourses / $row_per_page);
 
+
+    // $this->courses();
     $title = 'Youdemy | Courses';
-    include __DIR__ . '../../view/courses.php';
+
+    include __DIR__ . '../../view' . $pageinclude . '.php';
 
   }
 

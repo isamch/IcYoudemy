@@ -55,12 +55,11 @@ class Router
       }
 
 
-      if ($route == '/courses') {
+      if ($route == '/courses' || $route == '/dashboard') {
         // check methode get for pagination:
         echo 'get pagination method';
         $page = isset($_GET['page-nbr']) ? (int)$_GET['page-nbr'] : 1;
-        $coursesobject->displayCourses($page, 6);
-
+        $coursesobject->displayCourses($page, 6, $route);
       }
 
 

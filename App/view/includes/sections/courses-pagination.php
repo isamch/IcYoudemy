@@ -138,7 +138,7 @@
             <?php for ($count = 1; $count <= $totalPages; $count++): ?>
                 <!-- numbers -->
                 <a href="/Youdemy/public/index.php/courses?page-nbr=<?= htmlentities($count) ?>"
-                    class="flex items-center justify-center shrink-0 bg-white border hover:border-blue-500 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    class="flex items-center justify-center shrink-0  <?php echo (isset($_GET['page-nbr']) && $_GET['page-nbr'] == $count)? 'bg-blue-500 text-white' :'bg-white' ?> border hover:border-blue-500 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
                     <?= htmlentities($count) ?>
                 </a>
             <?php endfor; ?>
