@@ -11,12 +11,19 @@ class coursesController
 
     // SessionController::checksesession('user', 'login' , false);
 
-
     $title = 'Youdemy | Courses';
     include __DIR__ . '../../view/courses.php';
 
-
   }
+
+
+  // display function as pagination:
+  public function displayCourses(){
+    
+    
+  }
+
+
 
 
 }

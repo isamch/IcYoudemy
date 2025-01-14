@@ -17,10 +17,12 @@ use Pub\Application;
 $router = new Router();
 
 $routes = [
-  '/' => ['LandingepageController', 'landingepage'],
+  // '/' => ['LandingepageController', 'landingepage'],
+  '/' => ['HomeController', 'home'],
   '/home' => ['HomeController', 'home'],
   '/about' => ['AboutController', 'about'],
   '/courses' => ['CoursesController', 'courses'],
+  '/dashboard' => ['DashboardController', 'dashboard'],
   '/login' => ['AuthController', 'loginpage'],
   '/register' => ['AuthController', 'registerpage'],
   '/logout' =>['AuthController', 'logout']

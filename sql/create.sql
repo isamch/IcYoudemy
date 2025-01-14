@@ -9,6 +9,13 @@ CREATE TABLE Users (
 );
 
 
+CREATE TABLE Category (
+    Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL
+);
+
+
+
 -- table courses :
 CREATE TABLE Courses (
     Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -57,3 +64,11 @@ ADD COLUMN accStatus ENUM('active', 'not active', 'suspend') NOT NULL DEFAULT 'n
 
 ALTER TABLE Users
 ADD COLUMN connectStatus ENUM('online', 'offline') NOT NULL DEFAULT 'offline';
+
+
+
+ALTER TABLE Courses 
+ADD COLUMN CategoryID INT NOT NULL;
+
+ALTER TABLE Courses 
+ADD FOREIGN KEY (CategoryID) REFERENCES Category(Id);

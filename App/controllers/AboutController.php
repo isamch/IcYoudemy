@@ -11,7 +11,6 @@ class AboutController
 
     // SessionController::checksesession('user', 'login' , false);
 
-
     $title = 'Youdemy | About';
     include __DIR__ . '../../view/about.php';
 

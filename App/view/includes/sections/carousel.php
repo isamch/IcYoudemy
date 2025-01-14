@@ -16,6 +16,7 @@
       <button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800">Marketing</button>
     </div>
 
+    <!-- Flowbite Carousel Container -->
     <div id="carousel" class="relative mt-1">
       <div class="overflow-x-auto" style="scrollbar-width: thin; scrollbar-color: #a1a1aa #e5e5e5;">
         <div class="carousel-items flex space-x-6" style="width: max-content;">
@@ -28,10 +29,13 @@
 
           <!-- poste -->
           <div class="relative flex flex-col my-6 bg-white shadow-lg border border-slate-200 rounded-lg w-96 hover:shadow-xl transition-all duration-300 ease-in-out">
-            <div class="mx-3 mb-0 border-b border-slate-200 pt-3 pb-2 px-1">
+            <div class="flex items-start justify-between mx-3 mb-0 border-b border-slate-200 pt-5 pb-4 px-1">
               <span class="text-sm font-medium text-slate-600">
                 Author name
               </span>
+              <div>
+                <a href="#" class="bg-blue-700 text-white text-xs py-2 px-4 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">Tech</a>
+              </div>
             </div>
 
             <div class="px-6 py-4">
@@ -41,6 +45,8 @@
               <p class="text-gray-700 text-base">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
               </p>
+              
+
               <div class="mt-4">
                 <a href="#" class="bg-gray-300 text-black text-xs py-1 px-2 rounded-full hover:bg-gray-400 transition-all duration-300 w-fit">Tech</a>
                 <a href="#" class="bg-gray-300 text-black text-xs py-1 px-2 rounded-full hover:bg-gray-400 transition-all duration-300 w-fit">Business</a>
