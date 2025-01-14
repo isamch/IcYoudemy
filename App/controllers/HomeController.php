@@ -3,6 +3,8 @@
 
 namespace MyApp\controllers;
 use MyApp\controllers\SessionController;
+use MyApp\Model\CoursesModel;
+
 
 class HomeController
 {
@@ -11,6 +13,8 @@ class HomeController
 
     // SessionController::checksesession('user', 'login' , false);
 
+    $coursesModel = new CoursesModel();
+    $topcourses = $coursesModel->displayTopCoursesModel();
 
     
     $title = 'Youdemy | Home';

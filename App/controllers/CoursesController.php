@@ -39,4 +39,14 @@ class coursesController
 
   }
 
+
+  public function displayTopCourses()
+  {
+    
+    $coursesModel = new CoursesModel();
+    $coursesModel->displayTopCoursesModel();
+
+
+  }
+
 }
