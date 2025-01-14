@@ -12,6 +12,7 @@ class HomeController
     // SessionController::checksesession('user', 'login' , false);
 
 
+    
     $title = 'Youdemy | Home';
     include __DIR__ . '../../view/home.php';
 
