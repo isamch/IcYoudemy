@@ -47,6 +47,22 @@ class coursesController
   }
 
 
+  // display mycourses:
+  public function mycourses()
+  {
+
+    $studentName = $_SESSION['user']['Name'];
+    // mycoursesModel
+    $coursesModel = new CoursesModel();
+    $mycourses = $coursesModel->mycoursesModel($studentName);
+
+    $title = 'Youdemy | MyCourses';
+
+    include __DIR__ . '../../view/mycourses.php';
+  }
+
+  
+
   public function displayTopCourses()
   {
 
@@ -60,10 +76,6 @@ class coursesController
   public function addCourses()
   {
 
-    // add-course-title
-    // add-course-description
-    // add-course-category -->
-    // add-course-tags
 
 
     $CourseTitle = $_POST['add-course-title'];
@@ -146,23 +158,6 @@ class coursesController
   // update courses:
   public function updateCourses()
   {
-
-
-    // $CourseID = $valuecourses['CourseID'];
-    // $TeacherName = $valuecourses['TeacherName'];
-    // $CourseTitle = $valuecourses['CourseTitle'];
-    // $CourseDescription = $valuecourses['CourseDescription'];
-    // $CourseDate = $valuecourses['CourseDate'];
-    // $Category = $valuecourses['Category'];
-    // $tagsarrays = explode(",", $valuecourses['Tags']);
-    // $tags = implode(" ", $tagsarrays);
-
-
-    // <!-- update-course-id
-    // update-course-title
-    // update-course-description
-    // update-course-category -->
-    // update-course-tags
 
     $CourseID = $_POST['update-course-id'];
     $CourseTitle = $_POST['update-course-title'];
@@ -268,6 +263,13 @@ class coursesController
 
   }
 
+
+
+
+  // enroll: 
+  public function enrollCourse(){
+    
+  }
 
 
 

@@ -81,6 +81,13 @@ class Router
 
 
 
+      // check for get method enroll and unenroll:
+      if ( isset($_GET['enroll-id'])) {
+        echo 'get enroll method';
+        // $coursesobject->enrollCourse();
+      }
+
+
 
       if ($route == '/courses' || $route == '/dashboard') {
         // check methode get for pagination:

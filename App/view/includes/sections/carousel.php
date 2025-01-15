@@ -17,14 +17,19 @@
 			<button type="button" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800">Marketing</button>
 		</div> -->
 
+		<?php 
+						
+							dump($_SESSION['user']);
+							dump($topcourses[1]);
+
+						?>
 
 		<!-- Flowbite Carousel Container -->
 		<div id="carousel" class="relative mt-4">
 			<div class="overflow-x-auto" style="scrollbar-width: thin; scrollbar-color: #a1a1aa #e5e5e5;">
 				<div class="carousel-items flex space-x-4 px-4" style="width: max-content;">
 
-
-
+				
 					<?php foreach ($topcourses as $topcoursekey => $topcoursevalue):?>
 
 						<?php if($topcoursevalue['StatusDisplay'] == 'active'): ?>
@@ -51,12 +56,27 @@
 									</div>
 								</div>
 
-								<a href="#" class="mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">
-									Enroll now
-									<svg class="w-3.5 h-3.5 inline ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-										<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-									</svg>
-								</a>
+								<?php if (in_array($_SESSION['user']['Name'], explode(",", $topcoursevalue['StudentNames']))):?>
+
+									<a href="/Youdemy/public/index.php/home?unenroll-id=<?php echo $topcoursevalue['CourseID']; ?>" class="mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">
+										Unenroll
+										<svg class="w-3.5 h-3.5 inline ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+											<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+										</svg>
+									</a>
+									
+								
+								<?php else: ?>
+									
+									<a href="/Youdemy/public/index.php/home?enroll-id=<?php echo $topcoursevalue['CourseID']; ?>" class="mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">
+										Enroll now
+										<svg class="w-3.5 h-3.5 inline ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+											<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+										</svg>
+									</a>
+
+								<?php endif; ?>
+
 
 								<div class="flex flex-col justify-between  border-t border-slate-200 py-3 px-4">
 									<span class="text-sm text-slate-900">

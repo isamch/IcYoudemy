@@ -102,3 +102,81 @@ SELECT * FROM category;
 
 
 SELECT * FROM tags;
+
+
+
+
+
+SELECT
+                  courses.`Id` AS CourseID,
+                  courses.`Title` AS CourseTitle,
+                  courses.`Description` AS CourseDescription,
+                  courses.`CreatedAt` AS CourseDate,
+                  courses.`StatusDisplay` AS StatusDisplay,
+                  category.`Name` AS Category,
+                  GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+                  teacher.`Name` AS TeacherName,
+                  COUNT(DISTINCT students.`Id`) AS StudentCount,
+                  GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+              FROM
+                  courses
+                  INNER JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+                  INNER JOIN users as students ON students.`Id` = enrollments.`StudentID`
+                  LEFT JOIN category ON `CategoryID` = category.`Id`
+                  LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+                  LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
+                  LEFT JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+              GROUP BY
+                  courses.`Id`,
+                  courses.`Title`
+                -- WHERE students
+                  ;
+
+
+
+
+
+
+SELECT 
+    courses.`Id` AS CourseID,
+    courses.`Title` AS CourseTitle,
+    courses.`Description` AS CourseDescription,
+    courses.`CreatedAt` AS CourseDate,
+    courses.`StatusDisplay` AS StatusDisplay,
+    category.`Name` AS Category,
+    teacher.`Name` AS TeacherName,
+    GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+    students.`Id` AS studentID,
+    students.`Name` AS studentName,
+    (
+        SELECT COUNT(enrollments.`StudentID`)
+        FROM enrollments
+        WHERE enrollments.`CourseID` = courses.`Id`
+    ) AS StudentCount
+FROM
+    courses
+    INNER JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+    INNER JOIN users as students ON students.`Id` = enrollments.`StudentID`
+
+    INNER JOIN category ON `CategoryID` = category.`Id`
+    INNER JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+    INNER JOIN tags ON coursetags.`TagID` = tags.`Id`
+    INNER JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+WHERE 
+    students.`Name` = 'Ahmed Ali'
+GROUP BY
+    courses.`Id`,
+    courses.`Title`;
+
+
+
+-- courses.`Id` AS CourseID,
+-- courses.`Title` AS CourseTitle,
+-- courses.`Description` AS CourseDescription,
+-- courses.`CreatedAt` AS CourseDate,
+-- courses.`StatusDisplay` AS StatusDisplay,
+-- category.`Name` AS Category,
+-- GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+-- teacher.`Name` AS TeacherName,
+-- COUNT(DISTINCT students.`Id`) AS StudentCount,
+-- GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames

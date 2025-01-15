@@ -69,7 +69,6 @@ class CoursesModel
     $stmt = $this->conn->Connection()->prepare($query);
     $stmt->execute();
     return $stmt->fetchColumn();
-    
   }
 
 
@@ -80,10 +79,6 @@ class CoursesModel
 
   public function displayTopCoursesModel()
   {
-
-
-
-
 
     $query = "SELECT
                   courses.`Id` AS CourseID,
@@ -110,24 +105,71 @@ class CoursesModel
               ORDER BY 
                   StudentCount DESC
               LIMIT 0, 10";
-  
+
 
     $stmt = $this->conn->Connection()->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll();
+  }
 
+
+
+  // display mycourses:
+  public function mycoursesModel($studentName)
+  {
+
+    
+    $query = "SELECT 
+                  courses.`Id` AS CourseID,
+                  courses.`Title` AS CourseTitle,
+                  courses.`Description` AS CourseDescription,
+                  courses.`CreatedAt` AS CourseDate,
+                  courses.`StatusDisplay` AS StatusDisplay,
+                  category.`Name` AS Category,
+                  teacher.`Name` AS TeacherName,
+                  GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+                  students.`Id` AS studentID,
+                  students.`Name` AS studentName,
+                  (
+                      SELECT COUNT(enrollments.`StudentID`)
+                      FROM enrollments
+                      WHERE enrollments.`CourseID` = courses.`Id`
+                  ) AS StudentCount
+              FROM
+                  courses
+                  INNER JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+                  INNER JOIN users as students ON students.`Id` = enrollments.`StudentID`
+
+                  INNER JOIN category ON `CategoryID` = category.`Id`
+                  INNER JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+                  INNER JOIN tags ON coursetags.`TagID` = tags.`Id`
+                  INNER JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+              WHERE 
+                  students.`Name` = :studentName
+              GROUP BY
+                  courses.`Id`,
+                  courses.`Title`";
+
+
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':studentName', $studentName);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
 
   }
+
 
 
   // add courses:
   public function addCoursesModel($CourseTitle, $CourseDescription, $CategoryId, $teacherID)
   {
 
-    
+
     $query = "INSERT INTO courses (Title, Description, CategoryID, TeacherID) VALUES (:CourseTitle, :CourseDescription, :CategoryId, :teacherID)";
-    
-    
+
+
     $stmt = $this->conn->Connection()->prepare($query);
     $stmt->bindParam(':CourseTitle', $CourseTitle);
     $stmt->bindParam(':CourseDescription', $CourseDescription);
@@ -142,9 +184,6 @@ class CoursesModel
     }
 
     return false;
-
-
-
   }
 
 
@@ -157,8 +196,8 @@ class CoursesModel
     $query = "UPDATE courses 
               SET CategoryID = :CategoryID, Title = :Title, Description = :Description
               WHERE Id = :CourseID";
-    
-    
+
+
     $stmt = $this->conn->Connection()->prepare($query);
     $stmt->bindParam(':CourseID', $CourseID);
     $stmt->bindParam(':Title', $CourseTitle);
@@ -171,8 +210,6 @@ class CoursesModel
     }
 
     return false;
-
-
   }
 
 
@@ -205,8 +242,4 @@ class CoursesModel
     }
     return false;
   }
-
-
-
-
 }
