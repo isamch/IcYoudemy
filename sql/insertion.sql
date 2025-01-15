@@ -54,6 +54,10 @@ INSERT INTO Enrollments (StudentID, CourseID) VALUES
 (8, 10);
 
 
+INSERT INTO Enrollments (StudentID, CourseID) VALUES
+(3, 4);
+
+
 
 
 INSERT INTO Tags (Name) VALUES

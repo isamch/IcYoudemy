@@ -7,6 +7,7 @@ use MyApp\controllers\SessionController;
 use MyApp\controllers\TagsController;
 use MyApp\Model\CoursesModel;
 use MyApp\Model\Category;
+use MyApp\Model\EnrollModel;
 
 class coursesController
 {
@@ -266,11 +267,25 @@ class coursesController
 
 
 
-  // enroll: 
+  // enroll: relation with enroll model :
   public function enrollCourse(){
-    
+    $StudentID = $_SESSION['user']['Id'];
+    $CourseID = $_GET['enroll-id'];
+
+    $enroll = new EnrollModel();
+    $enroll->enroll($StudentID, $CourseID);
+
   }
 
+  public function unEnrollCourse(){
+    
+    $StudentID = $_SESSION['user']['Id'];
+    $CourseID = $_GET['unenroll-id'];
+
+    $enroll = new EnrollModel();
+    $enroll->unEnroll($StudentID, $CourseID);
+
+  }
 
 
 }

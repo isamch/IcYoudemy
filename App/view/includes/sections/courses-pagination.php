@@ -44,7 +44,7 @@
 
             <?php 
 
-                // dump($_SESSION['user']);
+                dump($_SESSION['user']);
                 // dump($courses[1]);
                 // dump($courses[3]);
             

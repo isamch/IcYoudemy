@@ -180,3 +180,15 @@ GROUP BY
 -- teacher.`Name` AS TeacherName,
 -- COUNT(DISTINCT students.`Id`) AS StudentCount,
 -- GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+
+
+
+
+
+-- enroll :
+
+INSERT INTO Enrollments (StudentID, CourseID) VALUES
+(3, 4);
+
+-- unenroll :
+DELETE FROM `enrollments` WHERE StudentID = 3 AND CourseID = 4;
