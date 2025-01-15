@@ -99,3 +99,6 @@ SELECT * FROM courses;
 
 -- show category:
 SELECT * FROM category;
+
+
+SELECT * FROM tags;

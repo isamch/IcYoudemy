@@ -90,6 +90,7 @@ class CoursesModel
                   courses.`Title` AS CourseTitle,
                   courses.`Description` AS CourseDescription,
                   courses.`CreatedAt` AS CourseDate,
+                  courses.`StatusDisplay` AS StatusDisplay,
                   category.`Name` AS Category,
                   GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
                   teacher.`Name` AS TeacherName,
@@ -117,6 +118,36 @@ class CoursesModel
 
 
   }
+
+
+  // add courses:
+  public function addCoursesModel($CourseTitle, $CourseDescription, $CategoryId, $teacherID)
+  {
+
+    
+    $query = "INSERT INTO courses (Title, Description, CategoryID, TeacherID) VALUES (:CourseTitle, :CourseDescription, :CategoryId, :teacherID)";
+    
+    
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':CourseTitle', $CourseTitle);
+    $stmt->bindParam(':CourseDescription', $CourseDescription);
+    $stmt->bindParam(':CategoryId', $CategoryId);
+    $stmt->bindParam(':teacherID', $teacherID);
+
+    if ($stmt->execute()) {
+
+      $lastid = $this->conn->Connection()->lastInsertId();
+
+      return $lastid;
+    }
+
+    return false;
+
+
+
+  }
+
+
 
   // update courses:
   public function updateCoursesModel($CourseID, $CourseTitle, $CourseDescription, $CategoryId)
@@ -146,6 +177,34 @@ class CoursesModel
 
 
 
+
+  // delete poste :
+  public function deleteCourseModel($CourseID)
+  {
+
+    $query = "UPDATE courses SET StatusDisplay = 'not active' WHERE courses.Id = :CourseID";
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':CourseID', $CourseID);
+
+    if ($stmt->execute()) {
+      return true;
+    }
+    return false;
+  }
+
+  // delete poste :
+  public function restoreCourseModel($CourseID)
+  {
+
+    $query = "UPDATE courses SET StatusDisplay = 'active' WHERE courses.Id = :CourseID";
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':CourseID', $CourseID);
+
+    if ($stmt->execute()) {
+      return true;
+    }
+    return false;
+  }
 
 
 

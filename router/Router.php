@@ -60,6 +60,22 @@ class Router
         $coursesobject->updateCourses();
       }
 
+      // delete & restore courses :
+      if (isset($_POST['delete-course'])) {
+        echo 'post delete method';
+        $coursesobject->deleteCourse();
+      }
+
+      if (isset($_POST['restore-course'])) {
+        echo 'post restore method';
+        $coursesobject->restoreCourse();
+      }
+
+      // add courses :
+      if (isset($_POST['add-course'])) {
+        echo 'post add method';
+        $coursesobject->addCourses();
+      }
 
 
 

@@ -5,8 +5,8 @@
 // dump($totalPages);
 // dump($courses[1]);
 
-   // dump($categorys[1]);
-   // dump($_SESSION['user']);
+// dump($categorys[1]);
+// dump($_SESSION['user']);
 
 ?>
 
@@ -14,7 +14,14 @@
 
 
 <div class="d-flex flex-column align-items-center mt-4">
-   <h2 class="text-center text-black my-4 fw-bold">Courses</h2>
+   <nav class="navbar navbar-light bg-light d-flex justify-content-between w-100">
+      <a class="navbar-brand">Navbar</a>
+      <div>
+         <input class="form-control  d-inline-block" type="text" placeholder="Search" style="width: 200px;">
+         <button class="btn btn-primary" id="toggleform-course" type="button" data-bs-toggle="modal" data-bs-target="#modalAddCourse">Add Courses</button>
+      </div>
+   </nav>
+
    <table class="table table-striped text-center">
       <thead>
          <tr>
@@ -33,23 +40,23 @@
       </thead>
       <tbody>
 
-   
+
 
          <?php foreach ($courses as $keycourse => $valuecourses): ?>
 
-            
+
             <?php
 
-               if (isset($_GET['updatecourse']) && $valuecourses['CourseID'] == $_GET['updatecourse']) {
-                  $CourseID = $valuecourses['CourseID'];
-                  $TeacherName = $valuecourses['TeacherName'];
-                  $CourseTitle = $valuecourses['CourseTitle'];
-                  $CourseDescription = $valuecourses['CourseDescription'];
-                  $CourseDate = $valuecourses['CourseDate'];
-                  $Category = $valuecourses['Category'];
-                  $tagsarrays = explode(",", $valuecourses['Tags']);
-                  $tags = implode(" ", $tagsarrays);
-               }
+            if (isset($_GET['updatecourse']) && $valuecourses['CourseID'] == $_GET['updatecourse']) {
+               $CourseID = $valuecourses['CourseID'];
+               $TeacherName = $valuecourses['TeacherName'];
+               $CourseTitle = $valuecourses['CourseTitle'];
+               $CourseDescription = $valuecourses['CourseDescription'];
+               $CourseDate = $valuecourses['CourseDate'];
+               $Category = $valuecourses['Category'];
+               $tagsarrays = explode(",", $valuecourses['Tags']);
+               $tags = implode(" ", $tagsarrays);
+            }
 
             ?>
 
@@ -84,25 +91,26 @@
                   </td>
 
                   <td><?php echo $valuecourses['StatusDisplay']; ?></td>
+
                   <td>
                      <?php if ($valuecourses['StatusDisplay'] == 'active'): ?>
-                        <form method="POST" action="/Youdemy/public/index.php/deletecourse">
-                           <input type="hidden" name="id" value="<?php echo $valuecourses['CourseID']; ?>">
-                           <button class="btn btn-danger btn-sm" type="submit" name="delete">Delete</button>
+                        <form method="POST">
+                           <input type="hidden" name="delete-course-id" value="<?php echo $valuecourses['CourseID']; ?>">
+                           <button class="btn btn-danger btn-sm" type="submit" name="delete-course">Delete</button>
                         </form>
                      <?php else: ?>
 
-                        <form method="POST" action="/dashboard">
-                           <input type="hidden" name="id" value="<?php echo $valuecourses['CourseID']; ?>">
-                           <button class="btn btn-success btn-sm" type="submit" name="restore">Restore</button>
+                        <form method="POST">
+                           <input type="hidden" name="restore-course-id" value="<?php echo $valuecourses['CourseID']; ?>">
+                           <button class="btn btn-success btn-sm" type="submit" name="restore-course">Restore</button>
                         </form>
                      <?php endif; ?>
                   </td>
 
-                  <?php if($_SESSION['user']['Role'] == 'admin'): ?>
+                  <?php if ($_SESSION['user']['Role'] == 'admin'): ?>
                      <td>
-                        <a href="/Youdemy/public/index.php/dashboard?<?php echo isset($_GET['page-nbr']) ? "page-nbr=" . $_GET['page-nbr'] . "&" : '';?>updatecourse=<?php echo $valuecourses['CourseID']; ?>" 
-                        class="btn btn-primary btn-sm">
+                        <a href="/Youdemy/public/index.php/dashboard?<?php echo isset($_GET['page-nbr']) ? "page-nbr=" . $_GET['page-nbr'] . "&" : ''; ?>updatecourse=<?php echo $valuecourses['CourseID']; ?>"
+                           class="btn btn-primary btn-sm">
                            Update
                         </a>
                      </td>
@@ -120,7 +128,7 @@
    </table>
 
 
-   
+
    <nav aria-label="Page navigation example">
       <ul class="pagination">
 
@@ -234,8 +242,8 @@ update-course-category -->
                <div class="mb-3">
                   <label for="field2" class="form-label">Category</label>
                   <select class="form-control" id="field2" name="update-course-category">
-                     
-                     <?php foreach($categorys as $category): ?>
+
+                     <?php foreach ($categorys as $category): ?>
                         <option value="<?php echo $category['Id'] ?>"><?php echo $category['Name'] ?></option>
                      <?php endforeach; ?>
                   </select>
@@ -274,3 +282,71 @@ update-course-category -->
    </script>
 
 <?php endif; ?>
+
+
+
+
+<!-- INSERT INTO Courses (Title, Description, TeacherID, CategoryID) VALUES -->
+<!-- ('C Programming Basics', 'Learn the fundamentals of C programming.', 2, 1), -->
+
+
+<!-- Modal Trigger Button -->
+<!-- <button id="toggleform-course" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCourse">
+   Launch Modal
+</button> -->
+
+<!-- Modal Add Courses -->
+<div class="modal fade" id="modalAddCourse" tabindex="-1" aria-labelledby="modalAddCourseLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Use modal-lg for large modals -->
+      <div class="modal-content">
+
+         <div class="modal-header">
+            <h5 class="modal-title" id="modalAddCourseLabel">Add Courses</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+
+         <div class="modal-body">
+            <form id="formAddCourse" method="POST">
+
+               <div class="mb-3">
+                  <label for="courseTitle" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="courseTitle" name="add-course-title">
+               </div>
+
+               <div class="mb-3">
+                  <label for="courseDescription" class="form-label">Description</label>
+                  <input type="text" class="form-control" id="courseDescription" name="add-course-description">
+               </div>
+
+               <div class="mb-3">
+                  <label for="courseTags" class="form-label">Tags</label>
+                  <input type="text" class="form-control" id="courseTags" name="add-course-tags">
+               </div>
+
+               <div class="mb-3">
+                  <label for="courseCategory" class="form-label">Category</label>
+                  <select class="form-control" id="courseCategory" name="add-course-category">
+                     <?php foreach ($categorys as $category): ?>
+                        <option value="<?php echo $category['Id'] ?>"><?php echo $category['Name'] ?></option>
+                     <?php endforeach; ?>
+                  </select>
+               </div>
+
+               <div class="modal-footer">
+                  <button type="submit" name="add-course" class="btn btn-primary" form="formAddCourse">Update</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               </div>
+
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<style>
+   @media screen and (min-width: 768px) {
+      .show {
+         width: 100% !important;
+      }
+   }
+</style>
