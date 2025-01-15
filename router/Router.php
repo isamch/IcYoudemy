@@ -54,6 +54,16 @@ class Router
         $authobject->login();
       }
 
+      if (isset($_POST['update-course'])) {
+        echo 'post update method';
+        // $authobject->login();
+      }
+
+
+
+
+
+
 
       if ($route == '/courses' || $route == '/dashboard') {
         // check methode get for pagination:

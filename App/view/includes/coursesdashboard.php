@@ -1,137 +1,270 @@
 <?php
 
-  // dump($postes);
+// dump($title);
+
+// dump($totalPages);
+// dump($courses[1]);
+
+   // dump($categorys[1]);
+   // dump($_SESSION['user']);
 
 ?>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">author</th>
-      <th scope="col">content</th>
-      <th scope="col">category</th>
-      <th scope="col">tags</th>
-      <th scope="col">url</th>
-      <th scope="col">status</th>
-      <th scope="col">delete</th>
-      <th scope="col">update</th>
-    </tr>
-  </thead>
-  <tbody>
 
-      <tr>
-        <td>s</td>
-        <td>atd>
-        <td>atd>
-        <td>atd>
-        <td>tags</td>
-        <td>tags</td>
-        <td>tags</td>
+
+
+<div class="d-flex flex-column align-items-center mt-4">
+   <h2 class="text-center text-black my-4 fw-bold">Courses</h2>
+   <table class="table table-striped text-center">
+      <thead>
+         <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Teacher</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date</th>
+            <th scope="col">Category</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Enrolled</th>
+            <th scope="col">Status</th>
+            <th scope="col">Delete/Restore</th>
+            <th scope="col">Update</th>
+         </tr>
+      </thead>
+      <tbody>
 
    
-        <td>
-            <form method='POST' action='/brief10/public/index.php/dashboard?section=postedashboard'>
-              <input type='hidden' name='idrestoreposte' value=''>
-              <button class="btn btn-success btn-sm" name="restoreposte" type='submit'>restore</button>
-            </form>
 
-            <form method='POST' action='/brief10/public/index.php/dashboard?section=postedashboard'>
-              <input type='hidden' name='iddeleteposte' value=''>
-              <button class="btn btn-danger btn-sm" name="deleteposte" type='submit'>delete</button>
-            </form>
+         <?php foreach ($courses as $keycourse => $valuecourses): ?>
 
-        </td>
-        <td>
+            
+            <?php
 
-          <a href="/brief10/public/index.php/dashboard?section=postedashboard&updateposte=" class="btn btn-primary btn-sm">update</a>
+               if (isset($_GET['updatecourse']) && $valuecourses['CourseID'] == $_GET['updatecourse']) {
+                  $CourseID = $valuecourses['CourseID'];
+                  $TeacherName = $valuecourses['TeacherName'];
+                  $CourseTitle = $valuecourses['CourseTitle'];
+                  $CourseDescription = $valuecourses['CourseDescription'];
+                  $CourseDate = $valuecourses['CourseDate'];
+                  $Category = $valuecourses['Category'];
+                  $tagsarrays = explode(",", $valuecourses['Tags']);
+                  $tags = implode(" ", $tagsarrays);
+               }
 
-        </td>
+            ?>
+
+            <?php if ($_SESSION['user']['Role'] == 'admin' || $_SESSION['user']['Name'] == $valuecourses['TeacherName']): ?>
 
 
-      </tr>
+               <tr style="font-size: 13px;">
+                  <td><?php echo $valuecourses['CourseID']; ?></td>
+                  <td><?php echo $valuecourses['TeacherName']; ?></td>
+                  <td><?php echo $valuecourses['CourseTitle']; ?></td>
+                  <td><?php echo $valuecourses['CourseDescription']; ?></td>
+                  <td><?php echo date("F j, Y, g:i a", strtotime($valuecourses['CourseDate'])); ?></td>
+                  <td><?php echo $valuecourses['Category']; ?></td>
+                  <td><?php echo $valuecourses['Tags']; ?></td>
 
 
-  </tbody>
-</table>
+                  <td>
+                     <select
+                        class="form-select text-center shadow rounded border"
+                        style="width: 80px;"
+                        onfocus="this.classList.add('w-auto');"
+                        onblur="this.classList.remove('w-auto');">
+                        <option class="text-center " selected>
+                           <?php echo $valuecourses['StudentCount']; ?>
+                        </option>
+                        <?php foreach (explode(",", $valuecourses['StudentNames']) as $studentName): ?>
+                           <option class="text-center" disabled>
+                              <?php echo $studentName; ?>
+                           </option>
+                        <?php endforeach; ?>
+                     </select>
+                  </td>
+
+                  <td><?php echo $valuecourses['StatusDisplay']; ?></td>
+                  <td>
+                     <?php if ($valuecourses['StatusDisplay'] == 'active'): ?>
+                        <form method="POST" action="/Youdemy/public/index.php/deletecourse">
+                           <input type="hidden" name="id" value="<?php echo $valuecourses['CourseID']; ?>">
+                           <button class="btn btn-danger btn-sm" type="submit" name="delete">Delete</button>
+                        </form>
+                     <?php else: ?>
+
+                        <form method="POST" action="/dashboard">
+                           <input type="hidden" name="id" value="<?php echo $valuecourses['CourseID']; ?>">
+                           <button class="btn btn-success btn-sm" type="submit" name="restore">Restore</button>
+                        </form>
+                     <?php endif; ?>
+                  </td>
+
+                  <?php if($_SESSION['user']['Role'] == 'admin'): ?>
+                     <td>
+                        <a href="/Youdemy/public/index.php/dashboard?<?php echo isset($_GET['page-nbr']) ? "page-nbr=" . $_GET['page-nbr'] . "&" : '';?>updatecourse=<?php echo $valuecourses['CourseID']; ?>" 
+                        class="btn btn-primary btn-sm">
+                           Update
+                        </a>
+                     </td>
+                  <?php endif; ?>
+
+
+               </tr>
+
+            <?php endif; ?>
+
+         <?php endforeach; ?>
+
+
+      </tbody>
+   </table>
+
+
+   
+   <nav aria-label="Page navigation example">
+      <ul class="pagination">
+
+
+         <li class="page-item">
+            <?php if (isset($_GET['page-nbr']) && $_GET['page-nbr'] > 1): ?>
+               <a href="/Youdemy/public/index.php/dashboard?page-nbr=<?= htmlentities($_GET['page-nbr'] - 1) ?>" class="page-link  text-black" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+               </a>
+            <?php else: ?>
+               <a class="page-link  text-black" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+               </a>
+            <?php endif; ?>
+         </li>
+
+
+
+         <?php for ($count = 1; $count <= $totalPages; $count++): ?>
+
+            <li class="page-item">
+               <a class="page-link text-black" href="/Youdemy/public/index.php/dashboard?page-nbr=<?= htmlentities($count) ?>""><?= htmlentities($count) ?></a>
+            </li>
+
+         <?php endfor; ?>
+
+
+
+         <li class=" page-item">
+                  <?php if (isset($_GET['page-nbr']) && $_GET['page-nbr'] >= $totalPages): ?>
+
+
+                     <a class="page-link  text-black" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                     </a>
+
+                  <?php else: ?>
+                     <a href="/Youdemy/public/index.php/dashboard?page-nbr=<?= htmlentities(isset($_GET['page-nbr']) ? $_GET['page-nbr'] + 1 : 2) ?>" class="page-link  text-black" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                     </a>
+
+                  <?php endif; ?>
+
+
+            </li>
+
+      </ul>
+   </nav>
+
+</div>
+
 
 
 
 
 <!-- Modal Trigger Button -->
 <button id="toggleform" type="button" class="btn btn-primary invisible" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch Modal
+   Launch Modal
 </button>
 
 
+
 <!-- 
-$content = $postvalue['content'];
-          $name = $postvalue['name'];
-          $tags = $postvalue['tags'];
-          $url = $postvalue['url']; -->
 
-<!-- Modal -->
+$CourseID = $valuecourses['CourseID'];
+$TeacherName = $valuecourses['TeacherName'];
+$CourseTitle = $valuecourses['CourseTitle'];
+$CourseDescription = $valuecourses['CourseDescription'];
+$CourseDate = $valuecourses['CourseDate'];
+$Category = $valuecourses['Category'];
+$tagsarrays = explode(",", $valuecourses['Tags']);
+$tags = implode(" ", $tagsarrays); -->
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Use modal-lg for large modals -->
-    <div class="modal-content">
+   <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Use modal-lg for large modals -->
+      <div class="modal-content">
 
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Courses</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Courses</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+
+         <div class="modal-body">
+            <form id="modalForm" method="POST">
+
+               <input type='hidden' name='update-course-id' value='<?php echo $CourseID ?>'>
+
+               <div class="mb-3">
+                  <label for="field1" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseTitle ?>" name="update-course-title">
+               </div>
+
+               <div class="mb-3">
+                  <label for="field1" class="form-label">Description</label>
+                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseDescription ?>" name="update-course-description">
+               </div>
+
+               <div class="mb-3">
+                  <label for="field1" class="form-label">Tags</label>
+                  <input type="text" class="form-control" id="field1" value="<?php echo $tags ?>" name="update-course-tags">
+               </div>
+
+               <div class="mb-3">
+                  <label for="field2" class="form-label">Category</label>
+                  <select class="form-control" id="field2" name="update-course-category">
+                     
+                     <?php foreach($categorys as $category): ?>
+                        <option value="<?php echo $category['Id'] ?>"><?php echo $category['Name'] ?></option>
+                     <?php endforeach; ?>
+                  </select>
+               </div>
+
+
+
+               <div class="modal-footer">
+                  <button type="submit" name="update-course" class="btn btn-primary" form="modalForm">Update</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               </div>
+
+            </form>
+         </div>
       </div>
-
-      <div class="modal-body">
-        <form id="modalForm" method="POST" action="/brief10/public/index.php/dashboard">
-        
-          <input type='hidden' name='updateid' value=''>
-
-          <div class="mb-3">
-            <label for="field1" class="form-label">content</label>
-            <input type="text" class="form-control" id="field1" value="" name="updatecontent">
-          </div>
-
-          <div class="mb-3">
-            <label for="field1" class="form-label">url</label>
-            <input type="text" class="form-control" id="field1" value="" name="updateurl">
-          </div>
-
-
-          <div class="mb-3">
-            <label for="field2" class="form-label">Category</label>
-            <select class="form-control" id="field2" name="updatecategory">
-                <option value="1">1</option>
-                <option value="1">1</option>
-            </select>
-          </div>
-
-
-          
-          <div class="modal-footer">
-            <button type="submit" name="updateposte" class="btn btn-primary" form="modalForm">Update</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-          
-        </form>
-      </div>
-    </div>
-  </div>
+   </div>
 </div>
 
 <style>
-  @media screen and (min-width: 768px) {
-    .show {
-      width: 100%;
-    }
-  }
+   @media screen and (min-width: 768px) {
+      .show {
+         width: 100% !important;
+      }
+   }
 </style>
 
 
 
-<!-- 
-  <script>
-    setTimeout(() => {
-      let btn = document.querySelector('#toggleform');
-      btn.click();
-    }, 500);
-  </script> -->
+<?php if (isset($_GET['updatecourse'])): ?>
+
+   <script>
+      setTimeout(() => {
+         let btn = document.querySelector('#toggleform');
+         btn.click();
+      }, 500);
+   </script>
+
+<?php endif; ?>

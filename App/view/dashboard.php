@@ -55,7 +55,7 @@
           <span class="nav_logo-name">Home</span>
         </a>
         <div class="nav_list">
-          <a href="/Youdemy/public/index.php/dashboard?section=coursesdashboard" class="nav_link <?php echo (isset($_GET['section']) && $_GET['section'] == 'coursesdashboard' || !isset($_GET['section'])) ? ' active' : ''; ?>">
+          <a href="/Youdemy/public/index.php/dashboard" class="nav_link <?php echo (isset($_GET['section']) && $_GET['section'] == 'coursesdashboard' || !isset($_GET['section'])) ? ' active' : ''; ?>">
             <i class="fa-solid fa-book"></i>
             <span class="nav_name">Courses</span>
           </a>
@@ -74,7 +74,7 @@
           <?php endif; ?>
         </div>
       </div>
-      <a href="#" class="nav_link">
+      <a href="/Youdemy/public/index.php/logout" class="nav_link">
         <i class='bx bx-log-out nav_icon'></i>
         <span class="nav_name">SignOut</span>
       </a>

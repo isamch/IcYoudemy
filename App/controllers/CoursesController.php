@@ -5,6 +5,7 @@ namespace MyApp\controllers;
 
 use MyApp\controllers\SessionController;
 use MyApp\Model\CoursesModel;
+use MyApp\Model\Category;
 
 class coursesController
 {
@@ -32,12 +33,15 @@ class coursesController
     
     $totalCourses = $coursesModel->countCourses();
     
-    $totalPages = ceil($totalCourses / $row_per_page);
+    $totalPages = (int)ceil($totalCourses / $row_per_page);
 
+    // display category:
+    $categorymodel = new Category();
+    $categorys = $categorymodel->getallcategory();
 
     // $this->courses();
     $title = 'Youdemy | Courses';
-
+    
     include __DIR__ . '../../view' . $pageinclude . '.php';
 
   }

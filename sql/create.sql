@@ -72,3 +72,7 @@ ADD COLUMN CategoryID INT NOT NULL;
 
 ALTER TABLE Courses 
 ADD FOREIGN KEY (CategoryID) REFERENCES Category(Id);
+
+
+ALTER TABLE Courses 
+ADD COLUMN StatusDisplay ENUM('active', 'not active') NOT NULL DEFAULT 'active';

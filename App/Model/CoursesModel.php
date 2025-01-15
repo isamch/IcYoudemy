@@ -25,18 +25,30 @@ class CoursesModel
   {
 
 
+    $query = "SELECT
+              courses.`Id` AS CourseID,
+              courses.`Title` AS CourseTitle,
+              courses.`Description` AS CourseDescription,
+              courses.`CreatedAt` AS CourseDate,
+              courses.`StatusDisplay` AS StatusDisplay,
+              category.`Name` AS Category,
+              GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+              teacher.`Name` AS TeacherName,
+              COUNT(DISTINCT students.`Id`) AS StudentCount,
+              GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+          FROM
+              courses
+              LEFT JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+              LEFT JOIN users as students ON students.`Id` = enrollments.`StudentID`
+              LEFT JOIN category ON `CategoryID` = category.`Id`
+              LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+              LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
+              LEFT JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+          GROUP BY
+              courses.`Id`,
+              courses.`Title`
+          LIMIT :startindx, :row_per_page;";
 
-
-    $query = "SELECT courses.`Id`, courses.`Title`,courses.`Description`, courses.`CreatedAt`, category.`Name` as category, GROUP_CONCAT(tags.`Name`) as tags, users.`Name` as teacherName
-              FROM
-                  courses
-                  LEFT JOIN category ON `CategoryID` = category.`Id`
-                  LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
-                  LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
-                  LEFT JOIN users ON users.`Id` = courses.`TeacherID`
-              GROUP BY
-                  courses.`Id`
-              LIMIT :startindx, :row_per_page;";
 
     $stmt = $this->conn->Connection()->prepare($query);
     $stmt->bindParam(':startindx', $startindx, PDO::PARAM_INT);
@@ -105,6 +117,19 @@ class CoursesModel
 
 
   }
+
+  // update courses:
+  public function updateCoursesModel()
+  {
+    // $query = 
+
+
+  }
+
+
+
+
+
 
 
 }
