@@ -195,6 +195,12 @@ $tagsarrays = explode(",", $valuecourses['Tags']);
 $tags = implode(" ", $tagsarrays); -->
 
 
+<!-- update-course-id
+update-course-title
+update-course-description
+update-course-tags
+update-course-category -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg modal-dialog-centered"> <!-- Use modal-lg for large modals -->
       <div class="modal-content">

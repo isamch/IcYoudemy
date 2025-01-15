@@ -119,9 +119,27 @@ class CoursesModel
   }
 
   // update courses:
-  public function updateCoursesModel()
+  public function updateCoursesModel($CourseID, $CourseTitle, $CourseDescription, $CategoryId)
   {
-    // $query = 
+
+
+    $query = "UPDATE courses 
+              SET CategoryID = :CategoryID, Title = :Title, Description = :Description
+              WHERE Id = :CourseID";
+    
+    
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':CourseID', $CourseID);
+    $stmt->bindParam(':Title', $CourseTitle);
+    $stmt->bindParam(':Description', $CourseDescription);
+    $stmt->bindParam(':CategoryID', $CategoryId);
+
+    if ($stmt->execute()) {
+
+      return true;
+    }
+
+    return false;
 
 
   }

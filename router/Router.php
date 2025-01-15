@@ -54,9 +54,10 @@ class Router
         $authobject->login();
       }
 
+      // update courses :
       if (isset($_POST['update-course'])) {
         echo 'post update method';
-        // $authobject->login();
+        $coursesobject->updateCourses();
       }
 
 
