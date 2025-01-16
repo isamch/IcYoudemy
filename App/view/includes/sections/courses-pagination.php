@@ -80,7 +80,7 @@
 
                         <div class="p-4 text-center">
 
-                            <?php if (isset($_SESSION['user'])): ?>
+                            <?php if (isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'student'): ?>
 
                                 <?php if (in_array($_SESSION['user']['Name'], explode(",", $valuecourses['StudentNames']))): ?>
 
@@ -98,7 +98,19 @@
                                         </svg>
                                     </a>
                                 <?php endif; ?>
+
+                            <?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher'): ?>
+
+
+                                <a class="inline-flex cursor-not-allowed items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
+                                    Enroll now
+                                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
+
                             <?php else: ?>
+
                                 <a href="/Youdemy/public/index.php/register" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
                                     Enroll now
                                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">

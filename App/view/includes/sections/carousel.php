@@ -56,7 +56,7 @@
 									</div>
 								</div>
 
-								<?php if (isset($_SESSION['user'])): ?>
+								<?php if (isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'student'): ?>
 
 									<?php if (in_array($_SESSION['user']['Name'], explode(",", $topcoursevalue['StudentNames']))): ?>
 
@@ -66,7 +66,6 @@
 												<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
 											</svg>
 										</a>
-
 
 									<?php else: ?>
 
@@ -78,6 +77,14 @@
 										</a>
 
 									<?php endif; ?>
+								<?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher'): ?>
+									<a class="cursor-not-allowed mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">
+										Enroll now
+										<svg class="w-3.5 h-3.5 inline ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+											<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+										</svg>
+									</a>
+
 								<?php else: ?>
 
 									<a href="/Youdemy/public/index.php/register" class="mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">

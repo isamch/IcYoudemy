@@ -102,6 +102,7 @@ class Router
         }else {
           $coursesobject->displayCourses($page, $row_per_page, $route);
         }
+      
       }
 
 

@@ -35,6 +35,9 @@
             <a class="nav-link" href="/Youdemy/public/index.php/home">Home</a>
           </li>
           <li class="nav-item me-4">
+            <a class="nav-link" href="/Youdemy/public/index.php/courses">Courses</a>
+          </li>
+          <li class="nav-item me-4">
             <a class="nav-link active" href="/Youdemy/public/index.php/dashboard">Dashboard</a>
           </li>
           <li class="nav-item">

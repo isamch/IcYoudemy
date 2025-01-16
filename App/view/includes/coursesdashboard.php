@@ -2,12 +2,17 @@
 
 // dump($title);
 
-dump($totalCourses);
-dump($courses);
-dump($totalPages);
+// dump($totalCourses);
+// dump($courses);
+// dump($totalPages);
 
 // dump($categorys[1]);
-dump($_SESSION['user']);
+// dump($_SESSION['user']);
+
+if (isset($_SESSION['error'])) {
+
+   dump($_SESSION['error']);
+}
 
 ?>
 
