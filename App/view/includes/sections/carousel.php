@@ -77,7 +77,7 @@
 										</a>
 
 									<?php endif; ?>
-								<?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher'): ?>
+								<?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' || isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'admin'): ?>
 									<a class="cursor-not-allowed mx-auto mb-4 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all duration-300 w-fit">
 										Enroll now
 										<svg class="w-3.5 h-3.5 inline ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">

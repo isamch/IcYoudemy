@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Youdemy | Dashboard</title>
 
   <link href='https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
@@ -50,6 +48,12 @@
   </header>
 
 
+
+      
+  <?php include_once "includes/sections/alerts-messages.php";?>
+
+
+  
   <div class="l-navbar" id="nav-bar">
     <nav class="nav">
       <div>
@@ -86,13 +90,13 @@
   <!--Container Main start-->
   <div class="height-100 bg-light">
 
-    <?php 
-      if (isset($_GET['section'])) {
-        $getpath = $_GET['section'];
-        include_once "includes/$getpath.php";
-      } else {
-        include_once "includes/coursesdashboard.php";
-      }
+    <?php
+    if (isset($_GET['section'])) {
+      $getpath = $_GET['section'];
+      include_once "includes/$getpath.php";
+    } else {
+      include_once "includes/coursesdashboard.php";
+    }
     ?>
 
 
@@ -137,9 +141,17 @@
     });
   </script>
 
+
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
-
-
-

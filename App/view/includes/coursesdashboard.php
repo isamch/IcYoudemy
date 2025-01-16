@@ -1,18 +1,18 @@
 <?php
 
-// dump($title);
+   // dump($title);
 
-// dump($totalCourses);
-// dump($courses);
-// dump($totalPages);
+   // dump($totalCourses);
+   // dump($courses);
+   // dump($totalPages);
 
-// dump($categorys[1]);
-// dump($_SESSION['user']);
+   // dump($categorys[1]);
+   // dump($_SESSION['user']);
 
-if (isset($_SESSION['error'])) {
+   // if (isset($_SESSION['error'])) {
 
-   dump($_SESSION['error']);
-}
+   //    dump($_SESSION['error']);
+   // }
 
 ?>
 
@@ -21,10 +21,12 @@ if (isset($_SESSION['error'])) {
 
 <div class="d-flex flex-column align-items-center mt-4">
    <nav class="navbar navbar-light bg-light d-flex justify-content-between w-100">
-      <a class="navbar-brand">Navbar</a>
+      <a class="navbar-brand">Courses</a>
       <div>
          <input class="form-control  d-inline-block" type="text" placeholder="Search" style="width: 200px;">
-         <button class="btn btn-primary" id="toggleform-course" type="button" data-bs-toggle="modal" data-bs-target="#modalAddCourse">Add Courses</button>
+         <?php if($_SESSION['user']['Role'] == 'teacher'): ?>
+            <button class="btn btn-primary" id="toggleform-course" type="button" data-bs-toggle="modal" data-bs-target="#modalAddCourse">Add Courses</button>
+         <?php endif; ?>         
       </div>
    </nav>
 
@@ -41,7 +43,9 @@ if (isset($_SESSION['error'])) {
             <th scope="col">Enrolled</th>
             <th scope="col">Status</th>
             <th scope="col">Delete/Restore</th>
-            <th scope="col">Update</th>
+            <?php if($_SESSION['user']['Role'] == 'teacher'): ?>
+               <th scope="col">Update</th>
+            <?php endif; ?>      
          </tr>
       </thead>
       <tbody>
@@ -232,17 +236,17 @@ update-course-category -->
 
                <div class="mb-3">
                   <label for="field1" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseTitle ?>" name="update-course-title">
+                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseTitle ?>" name="update-course-title" pattern="[\w\s\-:,'\.!]+" title="Only letters, numbers, spaces, and these symbols - : , ' . ! are allowed" required>
                </div>
 
                <div class="mb-3">
                   <label for="field1" class="form-label">Description</label>
-                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseDescription ?>" name="update-course-description">
+                  <input type="text" class="form-control" id="field1" value="<?php echo $CourseDescription ?>" name="update-course-description" pattern=".{1,500}" title="Description must be between 1 and 500 characters" required>
                </div>
 
                <div class="mb-3">
                   <label for="field1" class="form-label">Tags</label>
-                  <input type="text" class="form-control" id="field1" value="<?php echo $tags ?>" name="update-course-tags">
+                  <input type="text" class="form-control" id="field1" value="<?php echo $tags ?>" name="update-course-tags" pattern="([a-zA-Z0-9@#]+( [a-zA-Z0-9@#]+)*)?" title="Tags can contain letters, numbers, spaces, and @ or #" required>
                </div>
 
                <div class="mb-3">
@@ -316,17 +320,17 @@ update-course-category -->
 
                <div class="mb-3">
                   <label for="courseTitle" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="courseTitle" name="add-course-title">
+                  <input type="text" class="form-control" id="courseTitle" name="add-course-title" pattern="[\w\s\-:,'\.!]+" title="Only letters, numbers, spaces, and these symbols - : , ' . ! are allowed" required>
                </div>
 
                <div class="mb-3">
                   <label for="courseDescription" class="form-label">Description</label>
-                  <input type="text" class="form-control" id="courseDescription" name="add-course-description">
+                  <input type="text" class="form-control" id="courseDescription" name="add-course-description" pattern=".{1,500}" title="Description must be between 1 and 500 characters" required>
                </div>
 
                <div class="mb-3">
                   <label for="courseTags" class="form-label">Tags</label>
-                  <input type="text" class="form-control" id="courseTags" name="add-course-tags">
+                  <input type="text" class="form-control" id="courseTags" name="add-course-tags" pattern="([a-zA-Z0-9@#]+( [a-zA-Z0-9@#]+)*)?" title="Tags can contain letters, numbers, spaces, and @ or #" required>
                </div>
 
                <div class="mb-3">

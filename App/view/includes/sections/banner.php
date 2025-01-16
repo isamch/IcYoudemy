@@ -9,7 +9,7 @@
         <?php echo isset($_SESSION['user']) ? "New Courses" : "Login"; ?>
       </a>
 
-      <?php if(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' ): ?>
+      <?php if(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' || isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'admin'): ?>
     
       <?php else: ?>
       

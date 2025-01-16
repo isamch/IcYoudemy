@@ -246,3 +246,12 @@ WHERE TeacherID = 13;
 
 
 
+
+SELECT * 
+FROM users
+WHERE role != 'admin'
+ORDER BY `CreatedAt` DESC;
+
+
+
+UPDATE users SET accStatus = 'active' WHERE users.`Id` = 13;

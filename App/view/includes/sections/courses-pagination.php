@@ -99,7 +99,7 @@
                                     </a>
                                 <?php endif; ?>
 
-                            <?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher'): ?>
+                            <?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' || isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'admin'): ?>
 
 
                                 <a class="inline-flex cursor-not-allowed items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">

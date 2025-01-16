@@ -5,6 +5,7 @@ namespace Router;
 use MyApp\controllers\NotFoundController;
 use MyApp\controllers\AuthController;
 use MyApp\controllers\CoursesController;
+use MyApp\Controllers\UserController;
 
 class Router
 {
@@ -42,6 +43,7 @@ class Router
 
       $authobject = new AuthController;
       $coursesobject = new CoursesController;
+      $usersobject = new UserController;
 
       // check for post method :
       if (isset($_POST['register'])) {
@@ -80,14 +82,58 @@ class Router
 
 
       // check for get method enroll and unenroll:
-      if ( isset($_GET['enroll-id'])) {
+      if (isset($_GET['enroll-id'])) {
         echo 'get enroll method';
         $coursesobject->enrollCourse();
       }
 
-      if ( isset($_GET['unenroll-id'])) {
+      if (isset($_GET['unenroll-id'])) {
         echo 'get unEnroll method';
         $coursesobject->unEnrollCourse();
+      }
+
+
+
+      // // update status user :
+      // if (isset($_POST['activate-user'])) {
+      //   echo 'post activate user method';
+      //   $usersobject->activateStatusUsers();
+      // }
+
+      // if (isset($_POST['deactivate-user'])) {
+      //   echo 'post deactivate user method';
+      //   $usersobject->deactivateStatusUsers();
+      // }
+
+
+      
+      // get method for users dashboard
+      if (isset($_GET['section'])) {
+
+        // update status user :
+        if (isset($_POST['activate-user'])) {
+          echo 'post activate user method';
+          $usersobject->activateStatusUsers();
+        }
+
+        if (isset($_POST['deactivate-user'])) {
+          echo 'post deactivate user method';
+          $usersobject->deactivateStatusUsers();
+        }
+
+
+
+
+
+        if ($_GET['section'] == 'userdashboard') {
+          echo 'get users method';
+          $usersobject->displayUsers();
+        }
+
+        if ($_GET['section'] == 'categorydashboard') {
+          echo 'get category method';
+          // $usersobject->displayCategory();
+        }
       }
 
 
@@ -99,10 +145,9 @@ class Router
         $page = isset($_GET['page-nbr']) ? (int)$_GET['page-nbr'] : 1;
         if ($route == '/dashboard' && $_SESSION['user']['Role'] == 'teacher') {
           $coursesobject->displayCoursesTeacher($page, $row_per_page);
-        }else {
+        } else {
           $coursesobject->displayCourses($page, $row_per_page, $route);
         }
-      
       }
 
 
