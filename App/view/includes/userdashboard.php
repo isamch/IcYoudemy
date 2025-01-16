@@ -1,6 +1,6 @@
 <?php
 
-dump($users[1]);
+// dump($users[1]);
 
 
 ?>
@@ -48,7 +48,13 @@ dump($users[1]);
             <?php endif; ?>
 
           </td>
-          <td><?php echo $valueusers['accStatus']; ?></td>
+          <td>
+            <?php if($valueusers['accStatus'] == 'active'): ?>
+              <span style="color: green; font-weight: bold;">active</span>
+            <?php else: ?>
+              <span style="color: red; font-weight: bold;">not active</span>
+            <?php endif; ?>
+          </td>
 
           <td>
             <?php if ($valueusers['accStatus'] == 'active'): ?>

@@ -141,6 +141,12 @@ class AuthController
 
       if(password_verify($password, $result['Password']) || $password == $result['Password']){
 
+        if ($result['accStatus'] == 'not active') {
+          $_SESSION['account'] = 'Account Not activated!! wait for admin';
+          header('Location: /Youdemy/public/index.php/login');
+          exit;
+        }
+
         $_SESSION['user'] = $result;
 
         header('Location: /Youdemy/public/index.php/home');

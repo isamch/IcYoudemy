@@ -255,3 +255,10 @@ ORDER BY `CreatedAt` DESC;
 
 
 UPDATE users SET accStatus = 'active' WHERE users.`Id` = 13;
+
+
+
+-- SELECT * FROM users WHERE users.Id != 'admin';
+
+
+SELECT * FROM users;

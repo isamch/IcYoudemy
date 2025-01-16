@@ -75,6 +75,7 @@ class Auth
     }
   }
 
+  
   public function updateConnStatusToOnline($email){
     $stmt = $this->conn->Connection()->prepare("UPDATE users SET connectStatus = 'online' WHERE Email = :email");
     $stmt->bindParam(':email', $email);

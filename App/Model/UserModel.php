@@ -71,6 +71,27 @@ class UserModel
 
 
 
+  // // get user account status:
+  // public function userAccountStatus($UserId)
+  // {
+
+  //   $query = "SELECT * 
+  //             FROM users
+  //             WHERE users.Id != 'admin'
+  //             ORDER BY `CreatedAt` DESC;";
+
+  //   $stmt = $this->conn->Connection()->prepare($query);
+  //   $stmt->bindParam(':updateUserId', $UserId);
+
+  //   if ($stmt->execute()) {
+  //     return true;
+  //   }
+  //   return false;
+
+
+  // }
+
+
 
 
 
