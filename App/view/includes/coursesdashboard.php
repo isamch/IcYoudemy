@@ -2,11 +2,12 @@
 
 // dump($title);
 
-// dump($totalPages);
-// dump($courses[1]);
+dump($totalCourses);
+dump($courses);
+dump($totalPages);
 
 // dump($categorys[1]);
-// dump($_SESSION['user']);
+dump($_SESSION['user']);
 
 ?>
 
@@ -107,7 +108,7 @@
                      <?php endif; ?>
                   </td>
 
-                  <?php if ($_SESSION['user']['Role'] == 'admin'): ?>
+                  <?php if ($_SESSION['user']['Role'] != 'admin'): ?>
                      <td>
                         <a href="/Youdemy/public/index.php/dashboard?<?php echo isset($_GET['page-nbr']) ? "page-nbr=" . $_GET['page-nbr'] . "&" : ''; ?>updatecourse=<?php echo $valuecourses['CourseID']; ?>"
                            class="btn btn-primary btn-sm">
@@ -158,15 +159,15 @@
 
 
          <li class=" page-item">
-                  <?php if (isset($_GET['page-nbr']) && $_GET['page-nbr'] >= $totalPages): ?>
 
+                  <?php if (isset($_GET['page-nbr']) && $_GET['page-nbr'] >= $totalPages || !isset($_GET['page-nbr']) && $totalPages == 1  ): ?>
 
                      <a class="page-link  text-black" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                      </a>
 
                   <?php else: ?>
-                     <a href="/Youdemy/public/index.php/dashboard?page-nbr=<?= htmlentities(isset($_GET['page-nbr']) ? $_GET['page-nbr'] + 1 : 2) ?>" class="page-link  text-black" aria-label="Next">
+                     <a href="/Youdemy/public/index.php/dashboard?page-nbr=<?= htmlentities(isset($_GET['page-nbr']) ? $_GET['page-nbr'] + 1 : 1) ?>" class="page-link  text-black" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                      </a>
 

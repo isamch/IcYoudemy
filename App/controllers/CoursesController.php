@@ -41,7 +41,9 @@ class coursesController
     $categorymodel = new Category();
     $categorys = $categorymodel->getallcategory();
 
-    // $this->courses();
+
+    SessionController::checksesession('user', 'login' , false);
+
     $title = 'Youdemy | Courses';
 
     include __DIR__ . '../../view' . $pageinclude . '.php';
@@ -63,6 +65,42 @@ class coursesController
   }
 
   
+
+
+
+
+
+  
+  public function displayCoursesTeacher($page, $row_per_page)
+  {
+
+    $teacherID = $_SESSION['user']['Id'];
+
+    $startindx = ($page - 1) * $row_per_page;
+    $coursesModel = new CoursesModel();
+
+    $courses = $coursesModel->displayCoursesTeacher($startindx, $row_per_page, $teacherID);
+
+    $totalCourses = $coursesModel->countCoursesTeacher($teacherID);
+
+    $totalPages = (int)ceil($totalCourses / $row_per_page);
+
+
+    
+    // display category:
+    $categorymodel = new Category();
+    $categorys = $categorymodel->getallcategory();
+
+
+    SessionController::checksesession('user', 'login' , false);
+
+    $title = 'Youdemy | Dashboard';
+
+    include __DIR__ . '../../view/dashboard.php';
+
+
+  }
+
 
   public function displayTopCourses()
   {
@@ -230,9 +268,14 @@ class coursesController
       $tagsController->linkTagToCourse($CourseID, $Tag_id);
     }
 
+    if (isset($_GET['page-nbr'])) {
+      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
+      exit;
+    }else{
+      header('Location: /Youdemy/public/index.php/dashboard');
+      exit;
+    }
 
-    header('Location: /Youdemy/public/index.php/dashboard');
-    exit;
   }
 
 
@@ -249,6 +292,14 @@ class coursesController
       $_SESSION['error']['delete-course'] = "delete feild";
     }
 
+    if (isset($_GET['page-nbr'])) {
+      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
+      exit;
+    }else{
+      header('Location: /Youdemy/public/index.php/dashboard');
+      exit;
+    }
+
   }
 
   // restore poste :
@@ -262,6 +313,13 @@ class coursesController
       $_SESSION['error']['restore-course'] = "restore feild";
     }
 
+    if (isset($_GET['page-nbr'])) {
+      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
+      exit;
+    }else{
+      header('Location: /Youdemy/public/index.php/dashboard');
+      exit;
+    }
   }
 
 

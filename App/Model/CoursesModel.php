@@ -71,6 +71,18 @@ class CoursesModel
     return $stmt->fetchColumn();
   }
 
+  // count courses for teacher :
+  public function countCoursesTeacher($teacherID)
+  {
+    $query = "SELECT COUNT(*) as total FROM courses WHERE `TeacherID` = :TeacherID";
+    $stmt = $this->conn->Connection()->prepare($query);
+
+    $stmt->bindParam(':TeacherID', $teacherID, PDO::PARAM_INT);
+    
+    $stmt->execute();
+    return $stmt->fetchColumn();
+
+  }
 
 
 
@@ -112,6 +124,55 @@ class CoursesModel
     return $stmt->fetchAll();
   }
 
+
+
+
+  // display pagination courses for teacher :
+    public function displayCoursesTeacher($startindx, $row_per_page, $teacherID)
+    {
+
+      $query = "SELECT
+                    courses.`Id` AS CourseID,
+                    courses.`Title` AS CourseTitle,
+                    courses.`Description` AS CourseDescription,
+                    courses.`CreatedAt` AS CourseDate,
+                    courses.`StatusDisplay` AS StatusDisplay,
+                    category.`Name` AS Category,
+                    GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+                    teacher.`Id` AS TeacherID,
+                    teacher.`Name` AS TeacherName,
+                    COUNT(DISTINCT students.`Id`) AS StudentCount,
+                    GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+                FROM
+                    courses
+                    LEFT JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+                    LEFT JOIN users as students ON students.`Id` = enrollments.`StudentID`
+                    LEFT JOIN category ON `CategoryID` = category.`Id`
+                    LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+                    LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
+                    LEFT JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+                WHERE TeacherID = :teacherID
+                GROUP BY
+                    courses.`Id`,
+                    courses.`Title`
+                LIMIT :startindx, :row_per_page;";
+
+
+
+          $stmt = $this->conn->Connection()->prepare($query);
+          $stmt->bindParam(':teacherID', $teacherID, PDO::PARAM_INT);
+          $stmt->bindParam(':startindx', $startindx, PDO::PARAM_INT);
+          $stmt->bindParam(':row_per_page', $row_per_page, PDO::PARAM_INT);
+      
+      
+          $stmt->execute();
+          return $stmt->fetchAll();
+
+    }
+
+
+
+ 
 
 
   // display mycourses:

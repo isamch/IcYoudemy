@@ -79,8 +79,6 @@ class Router
 
 
 
-
-
       // check for get method enroll and unenroll:
       if ( isset($_GET['enroll-id'])) {
         echo 'get enroll method';
@@ -97,8 +95,13 @@ class Router
       if ($route == '/courses' || $route == '/dashboard') {
         // check methode get for pagination:
         echo 'get pagination method';
+        $row_per_page = 6;
         $page = isset($_GET['page-nbr']) ? (int)$_GET['page-nbr'] : 1;
-        $coursesobject->displayCourses($page, 6, $route);
+        if ($route == '/dashboard' && $_SESSION['user']['Role'] == 'teacher') {
+          $coursesobject->displayCoursesTeacher($page, $row_per_page);
+        }else {
+          $coursesobject->displayCourses($page, $row_per_page, $route);
+        }
       }
 
 
