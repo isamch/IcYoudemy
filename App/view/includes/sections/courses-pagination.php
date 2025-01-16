@@ -40,21 +40,20 @@
                 </div>
             </div> -->
             <!-- end course card -->
-            
 
-            <?php 
 
-                dump($_SESSION['user']);
-                // dump($courses[1]);
-                // dump($courses[3]);
-            
-            
+            <?php
+
+            // dump($_SESSION['user']);
+            // dump($courses[1]);
+            // dump($courses[3]);
+
             ?>
 
 
-            <?php foreach ($courses as $keycourse => $valuecourses): ?> 
-                
-                <?php if($valuecourses['StatusDisplay'] == 'active'): ?>
+            <?php foreach ($courses as $keycourse => $valuecourses): ?>
+
+                <?php if ($valuecourses['StatusDisplay'] == 'active'): ?>
 
                     <!-- start course card -->
                     <div class="flex flex-col bg-white shadow-lg border border-slate-200 rounded-lg h-full hover:shadow-xl transition-all duration-300 ease-in-out">
@@ -81,27 +80,38 @@
 
                         <div class="p-4 text-center">
 
-                            <?php if (in_array($_SESSION['user']['Name'], explode(",", $valuecourses['StudentNames']))):?>
+                            <?php if (isset($_SESSION['user'])): ?>
 
-                                <a href="/Youdemy/public/index.php/courses?unenroll-id=<?php echo $valuecourses['CourseID']; ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-blue-800 transition-all">
-                                    Unenroll 
-                                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                    </svg>
-                                </a>
+                                <?php if (in_array($_SESSION['user']['Name'], explode(",", $valuecourses['StudentNames']))): ?>
+
+                                    <a href="/Youdemy/public/index.php/courses?unenroll-id=<?php echo $valuecourses['CourseID']; ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-red-700 rounded-lg hover:bg-blue-800 transition-all">
+                                        Unenroll
+                                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                        </svg>
+                                    </a>
+                                <?php else: ?>
+                                    <a href="/Youdemy/public/index.php/courses?enroll-id=<?php echo $valuecourses['CourseID']; ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
+                                        Enroll now
+                                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
                             <?php else: ?>
-                                <a href="/Youdemy/public/index.php/courses?enroll-id=<?php echo $valuecourses['CourseID']; ?>" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
+                                <a href="/Youdemy/public/index.php/register" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
                                     Enroll now
                                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                     </svg>
                                 </a>
+
                             <?php endif; ?>
 
                         </div>
-                        
-                        
-                        
+
+
+
                         <div class="flex flex-col justify-between  border-t border-slate-200 py-3 px-4">
                             <span class="text-sm text-slate-900">
                                 Created At:

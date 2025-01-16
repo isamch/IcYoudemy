@@ -17,14 +17,8 @@ class EnrollModel
     $this->conn = new dbh();
   }
 
+  
   // -- enroll :
-
-  // INSERT INTO Enrollments (StudentID, CourseID) VALUES
-  // (3, 4);
-  
-  // -- unenroll :
-  // DELETE FROM `enrollments` WHERE StudentID = 3 AND CourseID = 4;
-  
   public function enroll($StudentID, $CourseID) {
     
     $query = "INSERT INTO Enrollments (StudentID, CourseID) VALUES (:StudentID, :CourseID)";
