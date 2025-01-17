@@ -39,11 +39,11 @@
 
 								<div class="flex items-center justify-between border-b border-slate-200 py-4 px-4">
 									<span class="text-sm font-medium text-slate-600"><?php echo $topcoursevalue['TeacherName']; ?></span>
-									<a href="#" class="bg-blue-700 text-white text-xs py-2 px-4 rounded-lg hover:bg-blue-800 transition-all duration-300"><?php echo $topcoursevalue['Category']; ?></a>
+									<a href="" class="bg-blue-700 text-white text-xs py-2 px-4 rounded-lg hover:bg-blue-800 transition-all duration-300"><?php echo $topcoursevalue['Category']; ?></a>
 								</div>
 
 								<div class="p-4 flex flex-col">
-									<a href="#">
+									<a href="course-page?page-courseid=<?php echo $topcoursevalue['CourseID']; ?>">
 										<h5 class="mb-2 text-xl font-bold text-gray-900"><?php echo $topcoursevalue['CourseTitle']; ?></h5>
 									</a>
 									<p class="text-gray-700 text-sm mb-4">

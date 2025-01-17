@@ -116,13 +116,18 @@ class Router
           $usersobject->displayUsers();
         }
 
-        if ($_GET['section'] == 'categorydashboard') {
-          echo 'get category method';
-          // $usersobject->displayCategory();
-        }
+        // if ($_GET['section'] == 'categorydashboard') {
+        //   echo 'get category method';
+        //   // $usersobject->displayCategory();
+        // }
 
       }
 
+      // method get for one single page of course : 
+      if ($route == '/course-page' && isset($_GET['page-courseid'])) {
+        echo 'get course-page method'; 
+        $coursesobject->coursepage();
+      }
 
 
       if ($route == '/courses' || $route == '/dashboard') {

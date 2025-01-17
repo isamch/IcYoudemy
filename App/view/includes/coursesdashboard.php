@@ -23,7 +23,7 @@
    <nav class="navbar navbar-light bg-light d-flex justify-content-between w-100">
       <a class="navbar-brand">Courses</a>
       <div>
-         <input class="form-control  d-inline-block" type="text" placeholder="Search" style="width: 200px;">
+         <!-- <input class="form-control  d-inline-block" type="text" placeholder="Search" style="width: 200px;"> -->
          <?php if($_SESSION['user']['Role'] == 'teacher'): ?>
             <button class="btn btn-primary" id="toggleform-course" type="button" data-bs-toggle="modal" data-bs-target="#modalAddCourse">Add Courses</button>
          <?php endif; ?>         

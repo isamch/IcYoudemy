@@ -25,7 +25,15 @@ class coursesController
   
   public function coursepage()
   {
+    if (!isset($_GET['page-courseid'])) {
+      header('Location: courses');
+      exit;
+    }
 
+    $CourseID = $_GET['page-courseid'];
+
+    $coursesModel = new CoursesModel();
+    $targetcourse = $coursesModel->searchByIdmodel($CourseID);
 
     $title = 'Youdemy | Course page';
     include __DIR__ . '../../view/course-page.php';
@@ -135,34 +143,34 @@ class coursesController
 
     if (empty($CourseTitle) || empty($CourseDescription) || empty($CategoryId) || empty($Tags)) {
       $_SESSION['error']['add_post'] = 'Add : empth inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
 
     if (!preg_match('/^[\w\s\-:,\'.!]+$/', $CourseTitle)) {
       $_SESSION['error']['add_post'] = 'Add : invalide CourseTitle inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
     if (!preg_match('/^.{1,500}$/', $CourseDescription)) {
       $_SESSION['error']['add_post'] = 'Add : invalideCourseDescription inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
 
     if (!preg_match('/^([a-zA-Z0-9@#]+( [a-zA-Z0-9@#]+)*)?$/', $Tags)) {
       $_SESSION['error']['add_post'] = 'Add : invalideTags inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
 
     if (!preg_match('/^\d+$/', $CategoryId)) {
       $_SESSION['error']['add_post'] = 'Add : invalide CategoryId inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
@@ -175,7 +183,7 @@ class coursesController
 
     if (!$coursId) {
       $_SESSION['error']['add_course'] = "Add : can't insert course probleme data base";
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
@@ -193,13 +201,8 @@ class coursesController
     }
 
     $_SESSION['success']['add_post'] = 'course Add success';
-    if (isset($_GET['page-nbr'])) {
-      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
-      exit;
-    }else{
-      header('Location: /Youdemy/public/index.php/dashboard');
-      exit;
-    }
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
 
 
   }
@@ -221,39 +224,39 @@ class coursesController
 
     if (empty($CourseID) || empty($CourseTitle) || empty($CourseDescription) || empty($CategoryId) || empty($Tags)) {
       $_SESSION['error']['update_post'] = 'update: empth inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
     if (!preg_match('/^\d+$/', $CourseID)) {
       $_SESSION['error']['update_post'] = 'update:invalide CourseID inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
     if (!preg_match('/^[\w\s\-:,\'.!]+$/', $CourseTitle)) {
       $_SESSION['error']['update_post'] = 'update:Invalid CourseTitle inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
     if (!preg_match('/^.{1,500}$/', $CourseDescription)) {
       $_SESSION['error']['update_post'] = 'update: invalide CourseDescription inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
 
     if (!preg_match('/^([a-zA-Z0-9@#]+( [a-zA-Z0-9@#]+)*)?$/', $Tags)) {
       $_SESSION['error']['update_post'] = 'update: invalide Tags inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
 
     if (!preg_match('/^\d+$/', $CategoryId)) {
       $_SESSION['error']['update_post'] = 'update: invalide CategoryId inputs';
-      header('Location: /Youdemy/public/index.php/dashboard');
+      header('Location: dashboard');
       exit;
     }
 
@@ -281,13 +284,8 @@ class coursesController
 
 
     $_SESSION['success']['update_post'] = 'course update success';
-    if (isset($_GET['page-nbr'])) {
-      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
-      exit;
-    }else{
-      header('Location: /Youdemy/public/index.php/dashboard');
-      exit;
-    }
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
 
   }
 
@@ -305,13 +303,8 @@ class coursesController
       $_SESSION['error']['delete-course'] = "delete feild";
     }
 
-    if (isset($_GET['page-nbr'])) {
-      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
-      exit;
-    }else{
-      header('Location: /Youdemy/public/index.php/dashboard');
-      exit;
-    }
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
 
   }
 
@@ -326,13 +319,9 @@ class coursesController
       $_SESSION['error']['restore-course'] = "restore feild";
     }
 
-    if (isset($_GET['page-nbr'])) {
-      header('Location: /Youdemy/public/index.php/dashboard?page-nbr='.$_GET['page-nbr']);
-      exit;
-    }else{
-      header('Location: /Youdemy/public/index.php/dashboard');
-      exit;
-    }
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
+
   }
 
 
@@ -346,6 +335,8 @@ class coursesController
     $enroll = new EnrollModel();
     $enroll->enroll($StudentID, $CourseID);
 
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
   }
 
   public function unEnrollCourse(){
@@ -355,7 +346,8 @@ class coursesController
 
     $enroll = new EnrollModel();
     $enroll->unEnroll($StudentID, $CourseID);
-
+    header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+    exit;
   }
 
 

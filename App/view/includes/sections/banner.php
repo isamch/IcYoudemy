@@ -4,7 +4,7 @@
       2 weeks</h2>
     <div class="mt-10 flex flex-col items-center justify-center space-y-5 sm:flex-row sm:gap-x-6 sm:space-y-0">
       
-      <a href="<?php echo isset($_SESSION['user']) ? "/Youdemy/public/index.php/courses" : "/Youdemy/public/index.php/login"; ?>" , rel="nofollow noreferrer"
+      <a href="<?php echo isset($_SESSION['user']) ? "courses" : "login"; ?>" , rel="nofollow noreferrer"
         class="w-full rounded-3xl border border-gray-900 bg-gray-900 px-7 py-3 text-center text-base font-bold text-white transition-colors duration-150 ease-in-out hover:border-gray-800 hover:bg-gray-800 sm:w-auto sm:border-2">
         <?php echo isset($_SESSION['user']) ? "New Courses" : "Login"; ?>
       </a>
@@ -14,7 +14,7 @@
       <?php else: ?>
       
         <a  class="relative inline-flex w-full items-center justify-center rounded-3xl border border-white px-7 py-3 sm:w-auto sm:border-2"
-        href="<?php echo isset($_SESSION['user']) ? "/Youdemy/public/index.php/mycourses" : "/Youdemy/public/index.php/register"; ?>">
+        href="<?php echo isset($_SESSION['user']) ? "mycourses" : "register"; ?>">
         
           <p class="text-base font-bold text-white">
             <?php echo isset($_SESSION['user']) ? "My Courses" : "Register"; ?>

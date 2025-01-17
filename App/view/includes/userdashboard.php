@@ -10,9 +10,9 @@
 <div class="d-flex flex-column align-items-center mt-4">
   <nav class="navbar navbar-light bg-light d-flex justify-content-between w-100">
     <a class="navbar-brand">Users</a>
-    <div>
+    <!-- <div>
       <input class="form-control  d-inline-block" type="text" placeholder="Search" style="width: 200px;">
-    </div>
+    </div> -->
   </nav>
 
   <table class="table table-striped text-center">

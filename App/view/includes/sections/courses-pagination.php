@@ -86,11 +86,11 @@
                     <div class="flex flex-col bg-white shadow-lg border border-slate-200 rounded-lg h-full hover:shadow-xl transition-all duration-300 ease-in-out">
                         <div class="flex items-start justify-between p-4 border-b border-slate-200">
                             <span class="text-sm font-medium text-slate-600"><?php echo $valuecourses['TeacherName']; ?></span>
-                            <a href="#" class="bg-blue-700 text-white text-xs py-1 px-3 rounded-lg hover:bg-blue-800 transition-all duration-300"><?php echo $valuecourses['Category']; ?></a>
+                            <a href="" class="bg-blue-700 text-white text-xs py-1 px-3 rounded-lg hover:bg-blue-800 transition-all duration-300"><?php echo $valuecourses['Category']; ?></a>
                         </div>
 
                         <div class="p-4 flex-1">
-                            <a href="#">
+                            <a href="course-page?page-courseid=<?php echo $valuecourses['CourseID']; ?>">
                                 <h5 class="mb-2 text-lg font-bold text-gray-900"><?php echo $valuecourses['CourseTitle']; ?></h5>
                             </a>
                             <p class="text-gray-700 text-sm mb-4">
@@ -347,7 +347,7 @@
 
                 resultsBoxUl.innerHTML += `
                     <li class="px-3 py-2 hover:bg-gray-100 border-b cursor-pointer"> 
-                        <a href="course-page?id=${element['CourseID']}">
+                        <a href="course-page?page-courseid=${element['CourseID']}">
                             <p class="font-semibold text-sm text-gray-800">${element['CourseTitle']}</p>
                             <p class="text-xs text-gray-500">${element['CourseDescription']}</p>
                         </a>
