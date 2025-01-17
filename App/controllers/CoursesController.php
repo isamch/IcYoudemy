@@ -22,6 +22,16 @@ class coursesController
   }
 
 
+  
+  public function coursepage()
+  {
+
+
+    $title = 'Youdemy | Course page';
+    include __DIR__ . '../../view/course-page.php';
+  }
+
+
 
   // display function as pagination:
   public function displayCourses($page, $row_per_page, $pageinclude)
@@ -348,5 +358,27 @@ class coursesController
 
   }
 
+
+
+  // search :
+  public function search()
+  {
+    
+    $data = json_decode(file_get_contents('php://input'), true);
+        
+    $inputvalue = $data['inputvalue'];
+        
+    if (preg_match('/^[a-zA-Z0-9\s]+$/', $inputvalue)) {
+        
+      $coursesModel = new CoursesModel();
+        
+      // echo json_encode($inputvalue);
+
+      echo json_encode($coursesModel->searchmodel($inputvalue));
+
+    }
+
+
+  }
 
 }

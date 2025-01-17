@@ -1,8 +1,35 @@
 <div class="font-[sans-serif] bg-gray-100">
     <div class="p-4 mx-auto lg:max-w-7xl md:max-w-4xl sm:max-w-xl max-sm:max-w-sm">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-6 sm:mb-10 text-center">Courses</h2>
+        <!-- <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-6 sm:mb-10 text-center">Courses</h2> -->
+        <nav class="bg-gray-100 flex justify-between items-center w-full p-4">
+            <a class="text-lg font-bold">Courses</a>
 
+            <div class="relative w-4/12">
+                <input
+                    id="search-courses"
+                    type="text"
+                    placeholder="Search"
+                    class="form-control border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300">
 
+                <!-- result: -->
+                <div
+                    id="results-box"
+                    class="absolute mt-1 w-full	bg-white border border-gray-300 rounded-md shadow-lg hidden">
+
+                    <!-- <span class="border-b text-xs text-gray-500 flex justify-center items-center py-2">searching ...</span> -->
+
+                    <ul>
+                        <!-- <li class="px-3 py-2 hover:bg-gray-100 border-b cursor-pointer">
+                            <a href="course-page?id=">
+                                <p class="font-semibold text-sm text-gray-800">Course Title</p>
+                                <p class="text-xs text-gray-500">This is a small description of the course.</p>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
 
@@ -99,7 +126,7 @@
                                     </a>
                                 <?php endif; ?>
 
-                            <?php elseif(isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' || isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'admin'): ?>
+                            <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'teacher' || isset($_SESSION['user']) && $_SESSION['user']['Role'] == 'admin'): ?>
 
 
                                 <a class="inline-flex cursor-not-allowed items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-all">
@@ -230,3 +257,116 @@
     </div>
 
 </div>
+
+<!-- js for search on courses -->
+<script>
+    const searchInput = document.querySelector('#search-courses');
+
+    const resultsBox = document.getElementById('results-box');
+
+
+    search();
+
+    function search() {
+
+
+
+
+        // console.log(searchInput);
+
+        searchInput.addEventListener("keyup", (event) => {
+
+            if (event.ctrlKey || event.altKey || event.metaKey) {
+                return;
+            }
+
+            let inputvalue = searchInput.value;
+
+            if (inputvalue.trim() !== '') {
+                resultsBox.classList.remove('hidden');
+                sendUpdatesToPhp(inputvalue);
+
+
+            } else {
+                resultsBox.classList.add('hidden');
+
+            }
+
+
+
+
+
+        });
+
+
+
+
+
+    }
+
+
+
+    function sendUpdatesToPhp(inputvalue) {
+        fetch('search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    inputvalue: inputvalue
+                })
+            })
+            .then((response) => response.json())
+            .then((data) => {
+
+                // call fun to append child:
+                // console.log(data);
+                displayresult(data);
+
+            })
+            .catch((error) => {
+                console.error('Fetch Error:', error);
+            });
+
+    }
+
+
+    function displayresult(result) {
+
+        const resultsBoxUl = resultsBox.querySelector('ul');
+        // console.log(resultsBoxUl);
+
+        resultsBoxUl.innerHTML = '';
+
+        // console.log(typeof result);
+        // console.log(result.length);
+
+        if (result.length >= 1) {
+
+            result.forEach(element => {
+
+                resultsBoxUl.innerHTML += `
+                    <li class="px-3 py-2 hover:bg-gray-100 border-b cursor-pointer"> 
+                        <a href="course-page?id=${element['CourseID']}">
+                            <p class="font-semibold text-sm text-gray-800">${element['CourseTitle']}</p>
+                            <p class="text-xs text-gray-500">${element['CourseDescription']}</p>
+                        </a>
+                    </li>
+                        
+                `;
+
+            });
+
+        }else{
+
+            resultsBoxUl.innerHTML += `
+                <span class="border-b text-xs text-gray-900 flex justify-center items-center py-2">Not Found !</span>        
+            `;
+        }
+
+
+
+    }
+
+
+</script>

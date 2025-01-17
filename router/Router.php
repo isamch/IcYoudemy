@@ -37,7 +37,7 @@ class Router
 
 
 
-    echo 'rout in handler : ' . $route . " ";
+    // echo 'rout in handler : ' . $route . " ";
 
     if (isset($this->routes[$route])) {
 
@@ -92,20 +92,6 @@ class Router
         $coursesobject->unEnrollCourse();
       }
 
-
-
-      // // update status user :
-      // if (isset($_POST['activate-user'])) {
-      //   echo 'post activate user method';
-      //   $usersobject->activateStatusUsers();
-      // }
-
-      // if (isset($_POST['deactivate-user'])) {
-      //   echo 'post deactivate user method';
-      //   $usersobject->deactivateStatusUsers();
-      // }
-
-
       
       // get method for users dashboard
       if (isset($_GET['section'])) {
@@ -134,6 +120,7 @@ class Router
           echo 'get category method';
           // $usersobject->displayCategory();
         }
+
       }
 
 

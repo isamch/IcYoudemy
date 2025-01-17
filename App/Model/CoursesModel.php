@@ -78,10 +78,9 @@ class CoursesModel
     $stmt = $this->conn->Connection()->prepare($query);
 
     $stmt->bindParam(':TeacherID', $teacherID, PDO::PARAM_INT);
-    
+
     $stmt->execute();
     return $stmt->fetchColumn();
-
   }
 
 
@@ -128,10 +127,10 @@ class CoursesModel
 
 
   // display pagination courses for teacher :
-    public function displayCoursesTeacher($startindx, $row_per_page, $teacherID)
-    {
+  public function displayCoursesTeacher($startindx, $row_per_page, $teacherID)
+  {
 
-      $query = "SELECT
+    $query = "SELECT
                     courses.`Id` AS CourseID,
                     courses.`Title` AS CourseTitle,
                     courses.`Description` AS CourseDescription,
@@ -159,27 +158,26 @@ class CoursesModel
 
 
 
-          $stmt = $this->conn->Connection()->prepare($query);
-          $stmt->bindParam(':teacherID', $teacherID, PDO::PARAM_INT);
-          $stmt->bindParam(':startindx', $startindx, PDO::PARAM_INT);
-          $stmt->bindParam(':row_per_page', $row_per_page, PDO::PARAM_INT);
-      
-      
-          $stmt->execute();
-          return $stmt->fetchAll();
-
-    }
+    $stmt = $this->conn->Connection()->prepare($query);
+    $stmt->bindParam(':teacherID', $teacherID, PDO::PARAM_INT);
+    $stmt->bindParam(':startindx', $startindx, PDO::PARAM_INT);
+    $stmt->bindParam(':row_per_page', $row_per_page, PDO::PARAM_INT);
 
 
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
 
- 
+
+
+
 
 
   // display mycourses:
   public function mycoursesModel($studentName)
   {
 
-    
+
     $query = "SELECT 
                   courses.`Id` AS CourseID,
                   courses.`Title` AS CourseTitle,
@@ -218,7 +216,6 @@ class CoursesModel
     $stmt->execute();
 
     return $stmt->fetchAll();
-
   }
 
 
@@ -302,5 +299,61 @@ class CoursesModel
       return true;
     }
     return false;
+  }
+
+
+
+
+
+
+
+
+  // search :
+  public function searchmodel($keysearch)
+  {
+
+    $query = "SELECT
+                  courses.`Id` AS CourseID,
+                  courses.`Title` AS CourseTitle,
+                  courses.`Description` AS CourseDescription,
+                  courses.`CreatedAt` AS CourseDate,
+                  courses.`StatusDisplay` AS StatusDisplay,
+                  category.`Name` AS Category,
+                  GROUP_CONCAT(tags.`Name`) AS Tags,
+                  teacher.`Id` AS TeacherID,
+                  teacher.`Name` AS TeacherName,
+                  COUNT(DISTINCT students.`Id`) AS StudentCount,
+                  GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+              FROM
+                  courses
+                  LEFT JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+                  LEFT JOIN users as students ON students.`Id` = enrollments.`StudentID`
+                  LEFT JOIN category ON `CategoryID` = category.`Id`
+                  LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+                  LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
+                  LEFT JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+              WHERE
+                  courses.`StatusDisplay` = 'active'
+              GROUP BY
+                  courses.`Id`,
+                  courses.`Title`
+              HAVING
+                  LOWER(courses.`Title`) LIKE :keysearch
+                  OR LOWER(courses.`Description`) LIKE :keysearch
+                  OR LOWER(category.`Name`) LIKE :keysearch
+                  OR LOWER(teacher.`Name`) LIKE :keysearch
+                  OR LOWER(GROUP_CONCAT(tags.`Name`)) LIKE :keysearch;";
+
+
+
+    $stmt = $this->conn->Connection()->prepare($query);
+
+    $searchwordsql = '%' . strtolower($keysearch) . '%';
+
+    $stmt->bindParam(':keysearch', $searchwordsql);
+
+    $stmt->execute();
+    return $stmt->fetchAll();
+  
   }
 }
