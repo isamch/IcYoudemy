@@ -2,13 +2,13 @@
 
 namespace MyApp\Model;
 
-use MyApp\Model\dbh;
+// use MyApp\Model\dbh;
 use PDO;
+// use MyApp\Model\BaseModel;
 
 
 
-
-class CoursesModel
+class CoursesModel extends BaseModel
 {
 
   private $conn;
@@ -16,6 +16,37 @@ class CoursesModel
   public function __construct()
   {
     $this->conn = new dbh();
+  }
+
+  // display Courses:
+  public function displayAll()
+  {
+    $query = "SELECT
+              courses.`Id` AS CourseID,
+              courses.`Title` AS CourseTitle,
+              courses.`Description` AS CourseDescription,
+              courses.`CreatedAt` AS CourseDate,
+              courses.`StatusDisplay` AS StatusDisplay,
+              category.`Name` AS Category,
+              GROUP_CONCAT(DISTINCT tags.`Name`) AS Tags,
+              teacher.`Name` AS TeacherName,
+              COUNT(DISTINCT students.`Id`) AS StudentCount,
+              GROUP_CONCAT(DISTINCT students.`Name`) AS StudentNames
+          FROM
+              courses
+              LEFT JOIN enrollments ON enrollments.`CourseID` = courses.`Id`
+              LEFT JOIN users as students ON students.`Id` = enrollments.`StudentID`
+              LEFT JOIN category ON `CategoryID` = category.`Id`
+              LEFT JOIN coursetags ON courses.`Id` = coursetags.`CourseID`
+              LEFT JOIN tags ON coursetags.`TagID` = tags.`Id`
+              LEFT JOIN users as teacher ON teacher.`Id` = courses.`TeacherID`
+          GROUP BY
+              courses.`Id`,
+              courses.`Title`;";
+
+
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchAll();
   }
 
 

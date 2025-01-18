@@ -7,7 +7,7 @@ use \PDO;
 
 
 
-class Tags
+class Tags extends BaseModel
 {
 
   private $conn;
@@ -20,17 +20,13 @@ class Tags
 
 
 
-  // public function getalltags()
-  // {
-  //   $query = "SELECT postes.id, postes.title, postes.url, categories.name, postes.content, GROUP_CONCAT(tags.name) AS tags FROM postes 
-  //             INNER JOIN categories ON category_id = categories.id
-  //             INNER JOIN post_tags ON postes.id = post_tags.post_id
-  //             INNER JOIN tags ON post_tags.tag_id = tags.id
-  //             GROUP BY postes.id;";
+  public function displayAll()
+  {
+    $query = "SELECT * FROM tags;";
 
-  //   $stmt = $this->conn->Connection()->query($query);
-  //   return $stmt->fetchAll();
-  // }
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchAll();
+  }
 
 
 

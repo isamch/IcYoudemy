@@ -57,7 +57,7 @@ class coursesController
 
     // display category:
     $categorymodel = new Category();
-    $categorys = $categorymodel->getallcategory();
+    $categorys = $categorymodel->displayAll();
 
 
     // SessionController::checksesession('user', 'login' , false);
@@ -107,7 +107,7 @@ class coursesController
     
     // display category:
     $categorymodel = new Category();
-    $categorys = $categorymodel->getallcategory();
+    $categorys = $categorymodel->displayAll();
 
 
     SessionController::checksesession('user', 'login' , false);

@@ -7,7 +7,7 @@ use \PDO;
 
 
 
-class Category
+class Category extends BaseModel
 {
 
   private $conn;
@@ -17,14 +17,17 @@ class Category
     $this->conn = new dbh();
   }
 
-
-  public function getallcategory() {
+  public function displayAll(){
     $query = "SELECT * FROM category;";
 
     $stmt = $this->conn->Connection()->query($query);
     return $stmt->fetchAll();
-
   }
+  
+
+  // public function getallcategory() {
+  //   return $this->displayAll();
+  // }
 
 
   // public function insertcategory($categoryname) {

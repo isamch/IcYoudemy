@@ -47,35 +47,35 @@ class Router
 
       // check for post method :
       if (isset($_POST['register'])) {
-        echo 'post register method';
+        // echo 'post register method';
         $authobject->register();
       }
 
       if (isset($_POST['login'])) {
-        echo 'post Login method';
+        // echo 'post Login method';
         $authobject->login();
       }
 
       // update courses :
       if (isset($_POST['update-course'])) {
-        echo 'post update method';
+        // echo 'post update method';
         $coursesobject->updateCourses();
       }
 
       // delete & restore courses :
       if (isset($_POST['delete-course'])) {
-        echo 'post delete method';
+        // echo 'post delete method';
         $coursesobject->deleteCourse();
       }
 
       if (isset($_POST['restore-course'])) {
-        echo 'post restore method';
+        // echo 'post restore method';
         $coursesobject->restoreCourse();
       }
 
       // add courses :
       if (isset($_POST['add-course'])) {
-        echo 'post add method';
+        // echo 'post add method';
         $coursesobject->addCourses();
       }
 
@@ -83,12 +83,12 @@ class Router
 
       // check for get method enroll and unenroll:
       if (isset($_GET['enroll-id'])) {
-        echo 'get enroll method';
+        // echo 'get enroll method';
         $coursesobject->enrollCourse();
       }
 
       if (isset($_GET['unenroll-id'])) {
-        echo 'get unEnroll method';
+        // echo 'get unEnroll method';
         $coursesobject->unEnrollCourse();
       }
 
@@ -98,12 +98,12 @@ class Router
 
         // update status user :
         if (isset($_POST['activate-user'])) {
-          echo 'post activate user method';
+          // echo 'post activate user method';
           $usersobject->activateStatusUsers();
         }
 
         if (isset($_POST['deactivate-user'])) {
-          echo 'post deactivate user method';
+          // echo 'post deactivate user method';
           $usersobject->deactivateStatusUsers();
         }
 
@@ -112,7 +112,7 @@ class Router
 
 
         if ($_GET['section'] == 'userdashboard') {
-          echo 'get users method';
+          // echo 'get users method';
           $usersobject->displayUsers();
         }
 
@@ -125,14 +125,14 @@ class Router
 
       // method get for one single page of course : 
       if ($route == '/course-page' && isset($_GET['page-courseid'])) {
-        echo 'get course-page method'; 
+        // echo 'get course-page method'; 
         $coursesobject->coursepage();
       }
 
 
       if ($route == '/courses' || $route == '/dashboard') {
         // check methode get for pagination:
-        echo 'get pagination method';
+        // echo 'get pagination method';
         $row_per_page = 6;
         $page = isset($_GET['page-nbr']) ? (int)$_GET['page-nbr'] : 1;
         if ($route == '/dashboard' && $_SESSION['user']['Role'] == 'teacher') {
@@ -145,7 +145,7 @@ class Router
 
       call_user_func($this->routes[$route]);
     } else {
-      echo 'page 404';
+      // echo 'page 404';
       $notfnd = new NotFoundController();
       $notfnd->notfound();
     }
