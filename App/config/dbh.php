@@ -1,9 +1,9 @@
 <?php
 
-// namespace MyApp\Model;
+namespace MyApp\config;
 
 use PDO;
-use PDOException;
+// use PDOException;
 
 
 class dbh

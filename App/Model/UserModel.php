@@ -3,7 +3,7 @@
 namespace MyApp\Model;
 
 
-use MyApp\Model\dbh;
+use MyApp\config\dbh;
 use \PDO;
 
 class UserModel

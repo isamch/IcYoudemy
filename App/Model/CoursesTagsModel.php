@@ -2,6 +2,7 @@
 
 namespace MyApp\Model;
 
+use MyApp\config\dbh;
 use PDO;
 
 class CoursesTagsModel

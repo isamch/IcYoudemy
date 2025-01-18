@@ -2,6 +2,9 @@
 
 namespace MyApp\Model;
 
+// composer dump-autoload
+
+
 abstract class BaseModel
 {
 
