@@ -72,7 +72,7 @@
             <?php
 
             // dump($_SESSION['user']);
-            // dump($courses[1]);
+            // dump($courses);
             // dump($courses[3]);
 
             ?>
