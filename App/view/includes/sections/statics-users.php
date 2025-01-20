@@ -1,7 +1,7 @@
 
 <?php 
 
-  dump($totalCourses);
+  // dump($totalCourses);
 
 ?>
 
@@ -13,10 +13,10 @@
       <div class="card h-100 text-center shadow">
         <div class="card-body">
           <div class="display-4 text-success mb-2">
-            <i class="bi bi-book-half"></i>
+            <i class="fa-solid fa-chalkboard-user"></i>
           </div>
-          <h2 class="card-title mb-3"><?= htmlspecialchars($totalCourses); ?></h2>
-          <p class="card-text text-muted">Total Courses</p>
+          <h2 class="card-title mb-3"><?= htmlspecialchars($countTeacher); ?></h2>
+          <p class="card-text text-muted">Total Teachers</p>
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@
       <div class="card h-100 text-center shadow">
         <div class="card-body">
           <div class="display-4 text-warning mb-2">
-            <i class="bi bi-book-fill text-success"></i>
+            <i class="fa-solid fa-school" style="color: #198754;"></i>
           </div>
-          <h2 class="card-title mb-3"><?= htmlspecialchars($totalCourses); ?></h2>
-          <p class="card-text text-muted">Active Courses</p>
+          <h2 class="card-title mb-3"><?= htmlspecialchars($countStudents); ?></h2>
+          <p class="card-text text-muted">Total Students</p>
         </div>
       </div>
     </div>
@@ -37,10 +37,10 @@
       <div class="card h-100 text-center shadow">
         <div class="card-body">
           <div class="display-4 text-danger mb-2">
-            <i class="bi bi-book text-muted"></i>
+            <i class="bi bi-person-check-fill text-success"></i>
           </div>
-          <h2 class="card-title mb-3"><?= htmlspecialchars($totalCourses); ?></h2>
-          <p class="card-text text-muted">Inactive  Courses</p>
+          <h2 class="card-title mb-3"><?= htmlspecialchars($countActive); ?></h2>
+          <p class="card-text text-muted">Active Account</p>
         </div>
       </div>
     </div>

@@ -342,3 +342,14 @@ SELECT
 SELECT COUNT(courses.`Id`) 
     FROM courses
     WHERE courses.`StatusDisplay` = 'active';
+
+
+
+
+
+SELECT COUNT(users.`Id`) 
+    FROM users
+    WHERE users.`accStatus` = 'active';
+
+
+

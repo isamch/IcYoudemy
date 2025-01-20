@@ -71,26 +71,48 @@ class UserModel
 
 
 
-  // // get user account status:
-  // public function userAccountStatus($UserId)
-  // {
+  // get user account status:
+  public function countUserAccountActive()
+  {
 
-  //   $query = "SELECT * 
-  //             FROM users
-  //             WHERE users.Id != 'admin'
-  //             ORDER BY `CreatedAt` DESC;";
-
-  //   $stmt = $this->conn->Connection()->prepare($query);
-  //   $stmt->bindParam(':updateUserId', $UserId);
-
-  //   if ($stmt->execute()) {
-  //     return true;
-  //   }
-  //   return false;
+    $query = "SELECT COUNT(users.`Id`) 
+              FROM users
+              WHERE users.`accStatus` = 'active';";
 
 
-  // }
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchColumn();
+  }
 
+
+
+  // get user account teachers:
+  public function countUserAccountTeachers()
+  {
+
+    $query = "SELECT COUNT(users.`Id`) 
+              FROM users
+              WHERE users.`Role` = 'teacher';";
+
+
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchColumn();
+  }
+
+
+
+  // get user account students:
+  public function countUserAccountStudents()
+  {
+
+    $query = "SELECT COUNT(users.`Id`) 
+    FROM users
+    WHERE users.`Role` = 'student';";
+
+
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchColumn();
+  }
 
 
 

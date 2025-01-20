@@ -18,6 +18,14 @@ class UserController
 
     $users = $userModel->displayUsersModel();
 
+    // count active user :
+    $countActive = $userModel->countUserAccountActive();
+    
+    // count teacher :
+    $countTeacher = $userModel->countUserAccountTeachers();
+    // count students:
+    $countStudents = $userModel->countUserAccountStudents();
+
     $title = 'Dashboard | Users';
 
     include __DIR__ . '../../view/dashboard.php';
