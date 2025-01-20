@@ -1,0 +1,63 @@
+04 - Routing (mvc): **************************
+
+
+1-create class router with 2 methods and one array   :	
+	
+
+  class Router
+  {
+      private $routes = []; // we have her ['url after index/php' , 'method controller that direct you to page you want']
+
+      // add url and method in $routes array :
+      public function add($route, $callback)
+      {
+          $this->routes[$route] = $callback;
+      }
+
+      // check if url that comme from  $_SERVER['REQUEST_URI'] if exist in the array private $routes = [], if yes apply associate method:
+      public function handleRequest($route)
+      {
+
+          //manage url , delet http://index.php ...:
+
+          $route = str_replace('/index.php', '', $route);
+          $route = strtok($route, '?');
+
+          if (isset($this->routes[$route])) {
+              // Call method associated with the path :
+              call_user_func($this->routes[$route]);
+
+          } else {
+              echo "page  not found or call method 404"
+          }
+      }
+  }
+
+
+
+// in controllers files : ** 
+
+class ContactController
+{
+    public function about()
+    {
+        echo 'page about';
+    }
+}
+
+
+
+// in index : 
+$router = new Router();
+
+$router->add('/home', [new HomeController(), 'index']);
+$router->add('/about', [new AboutController(), 'show']);
+$router->add('/contact', [new ContactController(), 'form']);
+
+$route = $_SERVER['REQUEST_URI'];
+
+$router->handleRequest($route);
+
+
+
+************************************************
