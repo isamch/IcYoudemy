@@ -50,6 +50,16 @@ class CoursesModel extends BaseModel
   }
 
 
+  public function activeCoursesModel()
+  {
+    $query = "SELECT COUNT(courses.`Id`) 
+              FROM courses
+              WHERE courses.`StatusDisplay` = 'active';";
+              
+    $stmt = $this->conn->Connection()->query($query);
+    return $stmt->fetchColumn();
+  }
+
 
   // display function as pagination:
   public function displayCourses($startindx, $row_per_page)

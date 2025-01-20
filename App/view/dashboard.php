@@ -50,11 +50,11 @@
 
 
 
-      
-  <?php include_once "includes/sections/alerts-messages.php";?>
+
+  <?php include_once "includes/sections/alerts-messages.php"; ?>
 
 
-  
+
   <div class="l-navbar" id="nav-bar">
     <nav class="nav">
       <div>
@@ -88,8 +88,11 @@
       </a>
     </nav>
   </div>
+
   <!--Container Main start-->
   <div class="height-100 bg-light">
+    
+    
 
     <?php
     if (isset($_GET['section'])) {

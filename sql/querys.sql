@@ -191,7 +191,7 @@ INSERT INTO Enrollments (StudentID, CourseID) VALUES
 (3, 4);
 
 -- unenroll :
-DELETE FROM `enrollments` WHERE StudentID = 3 AND CourseID = 4;
+-- DELETE FROM `enrollments` WHERE StudentID = 3 AND CourseID = 4;
 
 
 
@@ -254,7 +254,7 @@ ORDER BY `CreatedAt` DESC;
 
 
 
-UPDATE users SET accStatus = 'active' WHERE users.`Id` = 13;
+-- UPDATE users SET accStatus = 'active' WHERE users.`Id` = 13;
 
 
 
@@ -334,3 +334,11 @@ SELECT
                   courses.`Id`,
                   courses.`Title`;
 
+
+
+
+-- counte active courses :
+
+SELECT COUNT(courses.`Id`) 
+    FROM courses
+    WHERE courses.`StatusDisplay` = 'active';

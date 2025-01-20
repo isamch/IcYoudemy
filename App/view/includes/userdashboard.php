@@ -6,6 +6,7 @@
 ?>
 
 
+<?php include_once "sections/statics.users.php"; ?>
 
 <div class="d-flex flex-column align-items-center mt-4">
   <nav class="navbar navbar-light bg-light d-flex justify-content-between w-100">

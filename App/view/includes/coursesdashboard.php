@@ -17,6 +17,7 @@
 ?>
 
 
+<?php include_once "sections/statics-courses.php"; ?>
 
 
 <div class="d-flex flex-column align-items-center mt-4">

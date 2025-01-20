@@ -59,12 +59,21 @@ class coursesController
     $categorymodel = new Category();
     $categorys = $categorymodel->displayAll();
 
+ 
 
-    // SessionController::checksesession('user', 'login' , false);
-
+    $totalCoursesActive = $this->activeCourses();
+    
     $title = 'Youdemy | Courses';
 
     include __DIR__ . '../../view' . $pageinclude . '.php';
+  }
+
+  // active courses :
+  public function activeCourses()
+  {
+    $coursesModel = new CoursesModel();
+    $countActiveCourese = $coursesModel->activeCoursesModel();
+    return $countActiveCourese;
   }
 
 
