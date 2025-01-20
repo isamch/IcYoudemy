@@ -4,6 +4,7 @@ namespace Router;
 
 use MyApp\controllers\NotFoundController;
 use MyApp\controllers\AuthController;
+use MyApp\controllers\CategoryController;
 use MyApp\controllers\CoursesController;
 use MyApp\Controllers\UserController;
 
@@ -44,6 +45,7 @@ class Router
       $authobject = new AuthController;
       $coursesobject = new CoursesController;
       $usersobject = new UserController;
+      $categoryobject = new CategoryController;
 
       // check for post method :
       if (isset($_POST['register'])) {
@@ -80,6 +82,17 @@ class Router
       }
 
 
+      // add category :
+      if (isset($_POST['addcategory'])) {
+        echo 'post add category method';
+        $categoryobject->addcategory();
+      }
+
+      // update category :
+      if (isset($_POST['updatecategory'])) {
+        echo 'post update category method';
+        $categoryobject->updatecategory();
+      }
 
       // check for get method enroll and unenroll:
       if (isset($_GET['enroll-id'])) {
@@ -108,9 +121,6 @@ class Router
         }
 
 
-
-
-
         if ($_GET['section'] == 'userdashboard') {
           // echo 'get users method';
           $usersobject->displayUsers();
@@ -122,6 +132,9 @@ class Router
         // }
 
       }
+
+
+      
 
       // method get for one single page of course : 
       if ($route == '/course-page' && isset($_GET['page-courseid'])) {

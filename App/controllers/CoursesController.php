@@ -59,7 +59,7 @@ class coursesController
     $categorymodel = new Category();
     $categorys = $categorymodel->displayAll();
 
- 
+    
 
     $totalCoursesActive = $this->activeCourses();
     
@@ -118,6 +118,8 @@ class coursesController
     $categorymodel = new Category();
     $categorys = $categorymodel->displayAll();
 
+
+    $totalCoursesActive = $this->activeCourses();
 
     SessionController::checksesession('user', 'login' , false);
 

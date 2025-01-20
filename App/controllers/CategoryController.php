@@ -17,99 +17,88 @@ class CategoryController
 
     $category = new Category();
 
-    return $category->getallcategory();
+    return $category->displayAll();
 
   }
 
 
+
+
   // add category :
-
-  // public function addcategory() {
-
-
-  //   $categoryname = $_POST['nameaddcategory'];
+  public function addcategory() {
 
 
-  //   if (empty($categoryname)) {
-  //     header('Location: /brief10/public/index.php/home?errorcategory=empty');
-  //     exit;
-  //   }
-
-  //   if (!preg_match('/^[a-zA-Z\s]+$/', $categoryname)) { 
-  //     header('Location: /brief10/public/index.php/home?errorcategory=2');
-  //     exit;
-  //   }
+    $categoryname = $_POST['name-add-category'];
 
 
-  //   $category = new Category();
+    if (empty($categoryname)) {
+      $_SESSION['error']['add_category'] = 'Add : empth inputs';
+      header('Location: dashboard');
+      exit;
+    }
 
-  //   if ($category->insertcategory($categoryname)) {
-
-  //     echo 'added category';
-
-  //   } ; 
-
-  // }
-
-
-  // // update :
-  // public function updatecategory()
-  // {
-
-  //   $categoryid = $_POST['idupdatecategory'];
-  //   $categoryname = $_POST['nameupdatecategory'];
+    if (!preg_match('/^[a-zA-Z\s]+$/', $categoryname)) { 
+      $_SESSION['error']['add_category'] = 'Add : invalid inputs';
+      header('Location: dashboard');
+      exit;
+    }
 
 
-  //   if (empty($categoryname) && empty($categoryid)) {
-  //     header('Location: /brief10/public/index.php/home?errorcategory=empty');
-  //     exit;
-  //   }
+    $category = new Category();
 
-  //   if (!preg_match('/^[a-zA-Z\s]+$/', $categoryname)) {
-  //     header('Location: /brief10/public/index.php/home?errorcategory=2');
-  //     exit;
-  //   }
+    if ($category->insertcategory($categoryname)) {
 
+      $_SESSION['success']['add_category'] = 'Add Success';
+      header('Location: dashboard?section=categorydashboard');
+      exit;
+    } ; 
 
-
-  //   // call model update in category :
+  }
 
 
-  //   $category = new Category();
+  // update :
+  public function updatecategory()
+  {
 
-  //   if ($category->updatecategorymodel($categoryid, $categoryname)) {
-  //     header('Location: /brief10/public/index.php/dashboard?section=categorydashboard');
-  //     echo 'added category';
-  //   };
-  // }
+    $categoryid = $_POST['id-update-category'];
+    $categoryname = $_POST['name-update-category'];
+
+    if (!preg_match('/^[a-zA-Z\s]+$/', $categoryname)) { 
+      $_SESSION['error']['add_category'] = 'Add : invalid inputs';
+      header('Location: dashboard');
+      exit;
+    }
+
+
+    if (empty($categoryname) && empty($categoryid)) {
+      $_SESSION['error']['update_category'] = 'update : empth inputs';
+      header('Location: dashboard');
+      exit;
+    }
+
+    if (!preg_match('/^[a-zA-Z\s]+$/', $categoryname)) {
+      $_SESSION['error']['update_category'] = 'update : invalid inputs';
+      header('Location: dashboard');
+      exit;
+    }
+    $category = new Category();
+
+    if ($category->updatecategorymodel($categoryid ,$categoryname)) {
+
+      $_SESSION['success']['update_category'] = 'update Success';
+      header('Location: dashboard?section=categorydashboard');
+      exit;
+    }; 
+    
+
+  }
 
 
 
 
 
 
-  // // delete postes :
 
-  // public function deletecategory()
-  // {
-  //   $id = $_POST['iddeletecategory'];
-  //   $categorymodel = new Category();
-
-  //   if (!$categorymodel->deletecategorymodel($id)) {
-  //     echo 'delete feild';
-  //   }
-  // }
-
-  // // restore poste :
-  // public function restorecategory()
-  // {
-  //   $id = $_POST['idrestorecategory'];
-  //   $categorymodel = new Category();
-
-  //   if (!$categorymodel->restorecategorymodel($id)) {
-  //     echo 'restore feild';
-  //   }
-  // }
 
 
 
